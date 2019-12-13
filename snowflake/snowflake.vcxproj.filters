@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="application">
+      <UniqueIdentifier>{F9860F5B-653C-8850-EE30-82275AE57E54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="entrypoint">
+      <UniqueIdentifier>{81CBFE52-6D83-40A0-D68A-19FCC261DB90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="logging">
+      <UniqueIdentifier>{CC00C087-38E0-3E23-41F8-C9F9AD56A584}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\application\application.h">
+      <Filter>application</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entrypoint\entrypoint.h">
+      <Filter>entrypoint</Filter>
+    </ClInclude>
+    <ClInclude Include="src\logging\log.h">
+      <Filter>logging</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sfpch.h" />
+    <ClInclude Include="src\snowflake.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\logging\log.cpp">
+      <Filter>logging</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sfpch.cpp" />
+  </ItemGroup>
+</Project>
