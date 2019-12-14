@@ -352,3 +352,14 @@ MigrationBackup/
 #bin/bin-int
 bin
 bin-int
+
+#solution
+snowflake.sln
+
+#projectfiles
+snowflake/snowflake.vcxproj
+snowflake/snowflake.vcxproj.filters
+snowflake/snowflake.vcxproj.user
+sandbox/sandbox.vcxproj
+sandbox/sandbox.vcxproj.filters
+sandbox/sandbox.vcxproj.user

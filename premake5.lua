@@ -55,7 +55,8 @@ project "snowflake"
 	
 	libdirs
 	{
-
+		"%{libDir.GLEW}",
+		"%{libDir.SDL}"
 	}
 	
 	links
@@ -94,6 +95,10 @@ project "sandbox"
 		cppdialect "C++17"
 		staticruntime "on"
 
+		postbuildcommands {
+			"copy ..\\vendor\\SDL\\lib\\SDL2.dll ..\\bin\\Debug-x86_64\\sandbox"
+		}
+
 		targetdir("bin/" .. outputDir .. "/%{prj.name}")
 		objdir("bin-int/" .. outputDir .. "/%{prj.name}")
 
@@ -105,11 +110,6 @@ project "sandbox"
 		includedirs{
 			"vendor/spdlog/include",
 			"snowflake/src",
-		}
-
-		libdirs {
-			"%{libDir.GLEW}",
-			"%{libDir.SDL}"
 		}
 
 		links{
@@ -129,7 +129,7 @@ project "sandbox"
 			defines "SF_RELEASE"
 			runtime "Release"
 			optimize "on"
-		
+
 
 
 
