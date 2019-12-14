@@ -53,19 +53,11 @@ project "snowflake"
 		"%{includeDir.SDL}"
 	}
 	
-	libdirs
-	{
-		"%{libDir.GLEW}",
-		"%{libDir.SDL}"
-	}
+
 	
 	links
 	{	
-		"SDL2.lib",
-		"SDL2main.lib",
-		"glu32.lib",
-		"glew32s.lib",
-		"opengl32.lib"
+
 	}
 	
 	filter "system:windows"
@@ -89,46 +81,57 @@ project "snowflake"
 			optimize "on"
 			
 project "sandbox"
-		location "sandbox"
-		kind "ConsoleApp"
-		language "C++"
-		cppdialect "C++17"
-		staticruntime "on"
+	location "sandbox"
+	kind "ConsoleApp"
+	language "C++"
+	cppdialect "C++17"
+	staticruntime "on"
+	postbuildcommands {
+		"copy ..\\vendor\\SDL\\lib\\SDL2.dll ..\\bin\\Debug-x86_64\\sandbox"
+	}
+	targetdir("bin/" .. outputDir .. "/%{prj.name}")
+	objdir("bin-int/" .. outputDir .. "/%{prj.name}")
 
-		postbuildcommands {
-			"copy ..\\vendor\\SDL\\lib\\SDL2.dll ..\\bin\\Debug-x86_64\\sandbox"
-		}
+	files{
+		"%{prj.name}/src/**.h",
+		"%{prj.name}/src/**.cpp"
+	}
 
-		targetdir("bin/" .. outputDir .. "/%{prj.name}")
-		objdir("bin-int/" .. outputDir .. "/%{prj.name}")
+	includedirs{
+		includeDir["SPDLOG"],
+		includeDir["SDL"],
+		includeDir["GLEW"],
+		"snowflake/src",
+	}
 
-		files{
-			"%{prj.name}/src/**.h",
-			"%{prj.name}/src/**.cpp"
-		}
+	libdirs
+	{
+		"%{libDir.GLEW}",
+		"%{libDir.SDL}"
+	}
 
-		includedirs{
-			"vendor/spdlog/include",
-			"snowflake/src",
-		}
+	links{
+		"snowflake",
+		"SDL2.lib",
+		"SDL2main.lib",
+		"glu32.lib",
+		"glew32s.lib",
+		"opengl32.lib"
+	}
 
-		links{
-			"snowflake"
-		}
+	filter "system:windows"
+		systemversion "latest"
+		defines "SF_PLATFORM_WINDOWS"
+		
+	filter "configurations:Debug"
+		defines "SF_DEBUG"
+		runtime "Debug"
+		symbols "on"
 
-		filter "system:windows"
-			systemversion "latest"
-			defines "SF_PLATFORM_WINDOWS"
-
-		filter "configurations:Debug"
-			defines "SF_DEBUG"
-			runtime "Debug"
-			symbols "on"
-
-		filter "configurations:Release"
-			defines "SF_RELEASE"
-			runtime "Release"
-			optimize "on"
+	filter "configurations:Release"
+		defines "SF_RELEASE"
+		runtime "Release"
+		optimize "on"
 
 
 
