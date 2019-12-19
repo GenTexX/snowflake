@@ -5,6 +5,7 @@
 
 #include "logging/log.h"
 #include "application/application.h"
+#include <GL/glew.h>
 #include <SDL.h>
 #include <SDL_opengl.h>
 
@@ -20,12 +21,18 @@ int main(int argc, char* args[]) {
 
 		SF_CORE_ERROR("SDL initialization failed. Error: {}", SDL_GetError());
 		return -1;
-	} else SF_CORE_TRACE("Initialized SDL!");
-
+	} 
+	SF_CORE_TRACE("Initialized SDL!");
 
 	SF::Application* app = getApplication();
 
 	app->init();
+
+	if (glewInit() != GLEW_OK) {
+		SF_CORE_ERROR("GLEW initialization failed.");
+		return -1;
+	}
+	SF_CORE_TRACE("GLEW initialization succeeded.");
 
 	app->run();
 

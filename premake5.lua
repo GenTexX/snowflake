@@ -53,13 +53,6 @@ project "snowflake"
 		"%{includeDir.SDL}"
 	}
 	
-
-	
-	links
-	{	
-
-	}
-	
 	filter "system:windows"
 		systemversion "latest"
 		
@@ -119,6 +112,12 @@ project "sandbox"
 		"opengl32.lib"
 	}
 
+	defines {
+		"GLEW_STATIC"
+	}
+
+
+
 	filter "system:windows"
 		systemversion "latest"
 		defines "SF_PLATFORM_WINDOWS"
@@ -127,6 +126,7 @@ project "sandbox"
 		defines "SF_DEBUG"
 		runtime "Debug"
 		symbols "on"
+		linkoptions { '/NODEFAULTLIB:"LIBCMT"' }
 
 	filter "configurations:Release"
 		defines "SF_RELEASE"

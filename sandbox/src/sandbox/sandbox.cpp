@@ -1,7 +1,7 @@
 #include "sandbox.h"
 
 
-Sandbox::Sandbox() {
+Sandbox::Sandbox() : m_ApplicationWindow(nullptr) {
 
 
 
