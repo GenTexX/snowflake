@@ -16,7 +16,7 @@ namespace SF {
 		WindowClose, WindowTakeFocus, WindowHitTest,
 
 		/* KEYBOARD */
-		KeyPressed, KeyReleased, KeyTyped,
+		KeyPressed, KeyReleased,
 	
 		/* MOUSE */
 		MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled,
@@ -29,12 +29,12 @@ namespace SF {
 	enum EventCategory {
 
 		None = 0,
-		WindowEventCategory = BIT(0),
-		InputEventCategory = BIT(1),
-		KeyboardEventCategory = BIT(2),
-		MouseEventCategory = BIT(3),
+		WindowEventCategory = (1 << 0),
+		InputEventCategory = (1 << 0),
+		KeyboardEventCategory = (1 << 0),
+		MouseEventCategory = (1 << 0),
 		
-		ApplicationEventCategory = BIT(8)
+		ApplicationEventCategory = (1<<20)
 
 	};
 
@@ -44,18 +44,24 @@ namespace SF {
 		bool m_Handled;
 
 		virtual EventType getEventType() const = 0;
-		virtual EventCategory getEventCategory() const = 0;
+		virtual int getEventCategory() const = 0;
 		
 		virtual std::string toString() const { return "Event"; }
 
 		bool isInCategory(EventCategory category) const { return (this->getEventCategory() & category) == category; }
 
+
+
 	};
+
+	inline std::ostream& operator<<(std::ostream& os, const Event& e)
+	{
+		return os << e.toString();
+	}
 
 }
 
 #define EVENT_TYPE(type) static SF::EventType getStaticEventType(){ return SF::EventType::type; } \
 						 virtual SF::EventType getEventType() const override { return getStaticEventType(); }
 
-#define EVENT_CATEGORY(category) static SF::EventCategory getStaticEventCategory(){ return SF::EventCategory::category; } \
-								 virtual SF::EventCategory getEventCategory() const override { return getStaticEventCategory(); }
+#define EVENT_CATEGORY(category) virtual int getEventCategory() const override { return category; }

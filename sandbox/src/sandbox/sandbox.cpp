@@ -12,11 +12,19 @@ Sandbox::~Sandbox() {
 
 }
 
+void Sandbox::onEvent(SF::Event& e) {
+
+	SF_TRACE(e.toString());
+
+}
+
 void Sandbox::init() {
 
 	SF_TRACE("INIT SANDBOX");
 
-	this->m_ApplicationWindow = new SF::Window();
+	this->m_ApplicationWindow = new SF::Window(1024, 768, "SNOWFLAKE", 100, 100, SDL_WINDOW_RESIZABLE | SDL_WINDOW_FOREIGN);
+
+	this->m_ApplicationWindow->setEventCallback(std::bind(&Application::onEvent, this, std::placeholders::_1));
 
 	glClearColor(0.5f, 0.2f, 0.1f, 1.0f);
 

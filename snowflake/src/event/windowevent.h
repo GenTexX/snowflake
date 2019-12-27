@@ -14,6 +14,82 @@ namespace SF {
 
 
 	/* WINDOW EVENTS */
+
+	struct WindowShownEvent : WindowEvent {
+
+		WindowShownEvent() = default;
+
+		std::string toString() const override {
+
+			std::stringstream ss;
+
+			ss << "WindowEvent: shown";
+
+			return ss.str();
+
+		}
+
+		EVENT_TYPE(WindowShown)
+
+	};
+
+	struct WindowHiddenEvent : WindowEvent {
+
+		WindowHiddenEvent() = default;
+
+		std::string toString() const override {
+
+			std::stringstream ss;
+
+			ss << "WindowEvent: hidden";
+
+			return ss.str();
+
+		}
+
+		EVENT_TYPE(WindowHidden)
+
+	};
+
+	struct WindowExposedEvent : WindowEvent {
+
+		WindowExposedEvent() = default;
+
+		std::string toString() const override {
+
+			std::stringstream ss;
+
+			ss << "WindowEvent: exposed";
+
+			return ss.str();
+
+		}
+
+		EVENT_TYPE(WindowExposed)
+
+	};
+
+	struct WindowMovedEvent : WindowEvent {
+
+		int m_PosX, m_PosY;
+
+		WindowMovedEvent(const int& posx, const int& posy) : m_PosX(posx), m_PosY(posy) {};
+
+		std::string toString() const override {
+
+			std::stringstream ss;
+
+			ss << "WindowEvent: moved: " << this->m_PosX << "px, " << this->m_PosY << "px";
+
+			return ss.str();
+
+		}
+
+		EVENT_TYPE(WindowMoved)
+
+
+	};
+
 	struct WindowResizeEvent : WindowEvent {
 
 		int m_Width, m_Height;
@@ -44,6 +120,8 @@ namespace SF {
 
 			ss << "WindowEvent: minimized";
 
+			return ss.str();
+
 		}
 
 		EVENT_TYPE(WindowMinimized)
@@ -52,13 +130,15 @@ namespace SF {
 
 	struct WindowMaximizeEvent : WindowEvent {
 
-		WindowMaximizeEvent() = default;
+		WindowMaximizeEvent() {};
 
 		std::string toString() const override {
 
 			std::stringstream ss;
 
 			ss << "WindowEvent: maximized";
+
+			return ss.str();
 
 		}
 
@@ -76,6 +156,8 @@ namespace SF {
 
 			ss << "WindowEvent: restored";
 
+			return ss.str();
+
 		}
 
 		EVENT_TYPE(WindowRestored)
@@ -90,7 +172,9 @@ namespace SF {
 
 			std::stringstream ss;
 
-			ss << "WindowEvent: enter";
+			ss << "WindowEvent: entered";
+
+			return ss.str();
 
 		}
 
@@ -106,7 +190,9 @@ namespace SF {
 
 			std::stringstream ss;
 
-			ss << "WindowEvent: leave";
+			ss << "WindowEvent: left";
+
+			return ss.str();
 
 		}
 
@@ -124,6 +210,8 @@ namespace SF {
 
 			ss << "WindowEvent: focus gained";
 
+			return ss.str();
+
 		}
 
 		EVENT_TYPE(WindowFocusGained)
@@ -139,6 +227,8 @@ namespace SF {
 			std::stringstream ss;
 
 			ss << "WindowEvent: focus lost";
+
+			return ss.str();
 
 		}
 
@@ -156,6 +246,8 @@ namespace SF {
 
 			ss << "WindowEvent: closed";
 
+			return ss.str();
+
 		}
 
 		EVENT_TYPE(WindowClose)
@@ -172,6 +264,8 @@ namespace SF {
 
 			ss << "WindowEvent: take focus";
 
+			return ss.str();
+
 		}
 
 		EVENT_TYPE(WindowTakeFocus)
@@ -187,6 +281,8 @@ namespace SF {
 			std::stringstream ss;
 
 			ss << "WindowEvent: hit test";
+
+			return ss.str();
 
 		}
 

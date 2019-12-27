@@ -2,6 +2,8 @@
 #include <SDL.h>
 #include <SDL_opengl.h>
 #include <logging/log.h>
+#include <event/windowevent.h>
+#include <event/inputevent.h>
 
 namespace SF {
 
@@ -13,6 +15,10 @@ namespace SF {
 		SDL_GLContext m_Context;
 
 		static int handleEvent(void* data, SDL_Event* event);
+
+		using EventCallback = std::function<void(Event&)>;
+
+		EventCallback eventCallback;
 
 	public:
 		static SDL_Event s_Event;
@@ -48,6 +54,8 @@ namespace SF {
 		void setPosX(const int& x);
 		void setPosY(const int& y);
 		void setTitle(const std::string& title);
+
+		void setEventCallback(const EventCallback& callback);
 
 	};
 

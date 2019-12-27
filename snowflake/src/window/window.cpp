@@ -187,6 +187,13 @@ namespace SF {
 
 	}
 
+	void Window::setEventCallback(const EventCallback& callback)
+	{
+
+		this->eventCallback = callback;
+
+	}
+
 
 
 
@@ -194,42 +201,121 @@ namespace SF {
 	int Window::handleEvent(void* data, SDL_Event* event)
 	{
 
-		Window* w = (Window*)data;
-
+		Window* window = (Window*)data;
 		switch (event->type)
 		{
 		case SDL_WINDOWEVENT:
 			switch (event->window.event) {
-			case SDL_WINDOWEVENT_RESIZED:
+			case SDL_WINDOWEVENT_RESIZED: {
+				int w, h;
+				SDL_GetWindowSize(window->getSDL_Window(), &w, &h);
+				WindowResizeEvent e(w, h);
+				window->eventCallback(e);
 				break;
-			case SDL_WINDOWEVENT_MOVED:
+			}
+			case SDL_WINDOWEVENT_MOVED: {
+				int x, y;
+				SDL_GetWindowPosition(window->getSDL_Window(), &x, &y);
+				WindowMovedEvent e(x, y);
+				window->eventCallback(e);
 				break;
-			case SDL_WINDOWEVENT_MAXIMIZED:
+			}
+			case SDL_WINDOWEVENT_MAXIMIZED: {
+				WindowMaximizeEvent e;
+				window->eventCallback(e);
 				break;
-			case SDL_WINDOWEVENT_MINIMIZED:
+			}
+			case SDL_WINDOWEVENT_MINIMIZED: {
+				WindowMinimizeEvent e;
+				window->eventCallback(e);
 				break;
-			case SDL_WINDOWEVENT_HIDDEN:
+			}
+			case SDL_WINDOWEVENT_HIDDEN: {
+				WindowHiddenEvent e;
+				window->eventCallback(e);
 				break;
-			case SDL_WINDOWEVENT_EXPOSED:
+			}
+			case SDL_WINDOWEVENT_EXPOSED: {
+				WindowExposedEvent e;
+				window->eventCallback(e);
 				break;
-			case SDL_WINDOWEVENT_LEAVE:
+			}
+			case SDL_WINDOWEVENT_LEAVE: {
+				WindowLeaveEvent e;
+				window->eventCallback(e);
 				break;
+			}
+			case SDL_WINDOWEVENT_ENTER: {
+				WindowEnterEvent e;
+				window->eventCallback(e);
+				break;
+			}
+			case SDL_WINDOWEVENT_FOCUS_GAINED: {
+				WindowFocusGainEvent e;
+				window->eventCallback(e);
+				break;
+			}
+			case SDL_WINDOWEVENT_FOCUS_LOST: {
+				WindowFocusLoseEvent e;
+				window->eventCallback(e);
+				break;
+			}
+			case SDL_WINDOWEVENT_RESTORED: {
+				WindowRestoreEvent e;
+				window->eventCallback(e);
+				break;
+			}
+			case SDL_WINDOWEVENT_SHOWN: {
+				WindowShownEvent e;
+				window->eventCallback(e);
+				break;
+			}
+			case SDL_WINDOWEVENT_TAKE_FOCUS: {
+				WindowTakeFocusEvent e;
+				window->eventCallback(e);
+				break;
+			}
+			case SDL_WINDOWEVENT_HIT_TEST: {
+				WindowHitTestEvent e;
+				window->eventCallback(e);
+				break;
+			}
+			case SDL_WINDOWEVENT_CLOSE: {
+				WindowCloseEvent e;
+				window->eventCallback(e);
+				break;
+			}
 			default:
 				break;
 			}
 			break;
-		case SDL_MOUSEBUTTONDOWN:
+		case SDL_MOUSEBUTTONDOWN: {
+			MouseButtonDown e(event->button.button);
+			window->eventCallback(e);
 			break;
-		case SDL_MOUSEBUTTONUP:
+		}
+		case SDL_MOUSEBUTTONUP: {
+			MouseButtonUp e(event->button.button);
+			window->eventCallback(e);
 			break;
-		case SDL_MOUSEMOTION:
+		}
+		case SDL_MOUSEMOTION: {
+			MouseMovedEvent e(event->motion.x, event->motion.y);
+			window->eventCallback(e);
 			break;
+		}
 		case SDL_MOUSEWHEEL:
 			break;
-		case SDL_KEYDOWN:
+		case SDL_KEYDOWN: {
+			KeyPressedEvent e((KeyCode)event->key.keysym.sym);
+			window->eventCallback(e);
 			break;
-		case SDL_KEYUP:
+		}
+		case SDL_KEYUP: {
+			KeyReleasedEvent e((KeyCode)event->key.keysym.sym);
+			window->eventCallback(e);
 			break;
+		}
 		default:
 			break;
 		}
