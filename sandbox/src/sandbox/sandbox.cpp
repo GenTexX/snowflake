@@ -14,7 +14,6 @@ Sandbox::~Sandbox() {
 
 void Sandbox::onEvent(SF::Event& e) {
 
-	SF_TRACE(e.toString());
 
 }
 

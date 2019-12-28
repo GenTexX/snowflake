@@ -143,5 +143,25 @@ namespace SF {
 
 	};
 
+	struct MouseScrolledEvent : MouseEvent {
+
+		int m_Scroll;
+
+		MouseScrolledEvent(const int& scroll) : m_Scroll(scroll) {}
+
+		std::string toString() const override {
+
+			std::stringstream ss;
+
+			ss << "MouseScrolled: " << this->m_Scroll;
+
+			return ss.str();
+
+		}
+
+		EVENT_TYPE(MouseScrolled)
+
+	};
+
 
 }

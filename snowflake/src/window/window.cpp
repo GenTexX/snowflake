@@ -304,8 +304,11 @@ namespace SF {
 			window->eventCallback(e);
 			break;
 		}
-		case SDL_MOUSEWHEEL:
+		case SDL_MOUSEWHEEL: {
+			MouseScrolledEvent e(event->wheel.y);
+			window->eventCallback(e);
 			break;
+		}
 		case SDL_KEYDOWN: {
 			KeyPressedEvent e((KeyCode)event->key.keysym.sym);
 			window->eventCallback(e);
