@@ -25,7 +25,7 @@ void Sandbox::init() {
 
 	this->m_ApplicationWindow->setEventCallback(std::bind(&Application::onEvent, this, std::placeholders::_1));
 
-	glClearColor(0.5f, 0.2f, 0.1f, 1.0f);
+	glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 
 }
 
