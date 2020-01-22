@@ -15,7 +15,7 @@ namespace SF {
 	void OpenGLShader::setInt2(const std::string& name, const glm::ivec2& val)
 	{
 
-		glUniform2i(glGetUniformLocation(this->m_ProgramID, name.c_str()), val.x, val.y)
+		glUniform2i(glGetUniformLocation(this->m_ProgramID, name.c_str()), val.x, val.y);
 
 	}
 
