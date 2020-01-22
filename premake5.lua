@@ -24,6 +24,9 @@ libDir["GLEW"] = "vendor/GLEW/lib"
 includeDir["SDL"] = "vendor/SDL/include"
 libDir["SDL"] = "vendor/SDL/lib"
 
+--GLM
+includeDir["GLM"] = "vendor/glm/include"
+
 project "snowflake"
 	location "snowflake"
 	kind "StaticLib"
@@ -50,7 +53,13 @@ project "snowflake"
 		"%{prj.name}/src",
 		"%{includeDir.SPDLOG}",
 		"%{includeDir.GLEW}",
-		"%{includeDir.SDL}"
+		"%{includeDir.SDL}",
+		"%{includeDir.GLM}"
+	}
+	
+	links
+	{	
+
 	}
 	
 	filter "system:windows"
@@ -59,7 +68,6 @@ project "snowflake"
 		defines{
 			"SF_PLATFORM_WINDOWS",
 			"NOMINMAX",
-			"GLEW_STATIC",
 			"_CRT_SECURE_NO_WARNINGS"
 		}
 		
@@ -92,9 +100,10 @@ project "sandbox"
 
 	includedirs{
 		includeDir["SPDLOG"],
+		"%{includeDir.SDL}",
 		includeDir["SDL"],
 		includeDir["GLEW"],
-		"snowflake/src",
+		"snowflake/src"
 	}
 
 	libdirs
@@ -110,6 +119,10 @@ project "sandbox"
 		"glu32.lib",
 		"glew32s.lib",
 		"opengl32.lib"
+	}
+	
+	defines {
+		"GLEW_STATIC"
 	}
 
 	defines {
