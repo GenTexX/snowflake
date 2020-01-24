@@ -30,12 +30,6 @@ namespace SF {
 		virtual void setInt3(const std::string& name, const glm::ivec3& val) = 0;
 		virtual void setInt4(const std::string& name, const glm::ivec4& val) = 0;
 
-		//UINT
-		virtual void setUInt(const std::string& name, uint32_t val) = 0;
-		virtual void setUInt2(const std::string& name, const std::vector<uint32_t>& val) = 0;
-		virtual void setUInt3(const std::string& name, const std::vector<uint32_t>& val) = 0;
-		virtual void setUInt4(const std::string& name, const std::vector<uint32_t>& val) = 0;
-
 		//FLOAT
 		virtual void setFloat(const std::string& name, float val) = 0;
 		virtual void setFloat2(const std::string& name, const glm::vec2& val) = 0;
