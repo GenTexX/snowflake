@@ -19,11 +19,12 @@ public:
 		e.m_Handled = true;
 	
 	};
+
 	virtual void onUpdate() {
 		
-		SF_TRACE("update ExampleLayer");
 	
 	}
+	
 	virtual void onImGuiRender() {}
 
 };

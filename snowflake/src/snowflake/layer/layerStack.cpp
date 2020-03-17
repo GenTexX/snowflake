@@ -5,7 +5,15 @@ namespace SF {
 
 	LayerStack::LayerStack() {}
 
-	LayerStack::~LayerStack() {}
+	LayerStack::~LayerStack() {
+	
+		for each (auto layer in this->m_Layers) {
+
+			delete layer;
+
+		}
+	
+	}
 
 	void LayerStack::pushLayer(Layer* layer)
 	{
