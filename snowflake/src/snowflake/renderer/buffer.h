@@ -1,5 +1,7 @@
 #pragma once
+#include <GL/glew.h>
 #include <snowflake/logging/log.h>
+#include "snowflake/renderer/renderer.h"
 
 namespace SF {
 
@@ -37,13 +39,35 @@ namespace SF {
 
 	}
 
-	/********* Buffe	*******************************************/
+	static GLenum bufferElementTypeToGLenum(BufferElementType type) {
+
+		switch (type)
+		{
+		case SF::BufferElementType::None:	break;
+		case SF::BufferElementType::Float:	
+		case SF::BufferElementType::Float2:	
+		case SF::BufferElementType::Float3:	
+		case SF::BufferElementType::Float4:	
+		case SF::BufferElementType::Mat3:	
+		case SF::BufferElementType::Mat4:	return GL_FLOAT;
+		case SF::BufferElementType::Int1:	
+		case SF::BufferElementType::Int2:	
+		case SF::BufferElementType::Int3:	
+		case SF::BufferElementType::Int4:	return GL_INT;
+		case SF::BufferElementType::Bool:	return GL_BOOL;
+		default: break;
+		}
+
+		SF_CORE_ERROR("unkonwn element-type!");
+		return 0;
+
+	}
+
+	/********* Buffer	*******************************************/
 	class Buffer {
 
 	public:
-		Buffer() = delete;
-		Buffer(const Buffer&) = delete;
-		Buffer& operator=(const Buffer&) = delete;
+		Buffer() = default;
 		
 		virtual ~Buffer();
 
@@ -60,10 +84,36 @@ namespace SF {
 		BufferElementType m_Type;
 		uint32_t m_Size;
 		size_t m_Offset;
+		bool m_Normalized;
 		
 		BufferElement() = default;
-		BufferElement(BufferElementType type, const std::string& name);
-		virtual ~BufferElement();
+		BufferElement(BufferElementType type, const std::string& name, const bool& normalized = false);
+
+		virtual ~BufferElement() {}
+
+		uint32_t getComponentSize() const {
+
+			switch (this->m_Type)
+			{
+			case SF::BufferElementType::None:	break;
+			case SF::BufferElementType::Float:	return 1;
+			case SF::BufferElementType::Float2:	return 2;
+			case SF::BufferElementType::Float3:	return 3;
+			case SF::BufferElementType::Float4:	return 4;
+			case SF::BufferElementType::Mat3:	return 3 * 3;
+			case SF::BufferElementType::Mat4:	return 4 * 4;
+			case SF::BufferElementType::Int1:	return 1;
+			case SF::BufferElementType::Int2:	return 2;
+			case SF::BufferElementType::Int3:	return 3;
+			case SF::BufferElementType::Int4:	return 4;
+			case SF::BufferElementType::Bool:	return 1;
+			default:
+				break;
+			}
+
+			return 0;
+
+		}
 
 	};
 
@@ -77,7 +127,8 @@ namespace SF {
 		uint32_t m_Stride;
 
 	public:
-		BufferLayout(std::initializer_list<BufferElement>& elements) : m_Elements(elements) {
+		BufferLayout() {}
+		BufferLayout(const std::initializer_list<BufferElement>& elements) : m_Elements(elements) {
 			
 			size_t offset = 0;
 			this->m_Stride = 0;
@@ -92,7 +143,7 @@ namespace SF {
 		
 		}
 
-		~BufferLayout();
+		~BufferLayout() {};
 
 		const std::vector<BufferElement>& getElements() const { return this->m_Elements; }
 		const uint32_t& getStride() const { return this->m_Stride; };
@@ -105,19 +156,20 @@ namespace SF {
 	};
 
 
-	class VertexBuffer : Buffer {
+	class VertexBuffer : public Buffer {
 
 	private:
-		BufferLayout m_Layout;
-
-	protected:
-		VertexBuffer();
+//		BufferLayout m_Layout;
 
 	public:
-		virtual ~VertexBuffer() = default;
+		VertexBuffer() {}
+		virtual ~VertexBuffer() {}
 
-		virtual const BufferLayout& getLayout() const { return this->m_Layout; };
-		virtual void setLayout(const BufferLayout& layout) { this->m_Layout = layout; };
+		virtual const BufferLayout& getLayout() const = 0;
+		virtual void setLayout(const BufferLayout& layout) = 0;
+
+		virtual void bind() const = 0;
+		virtual void unbind() const = 0;
 
 		static VertexBuffer* create(float* data, uint32_t size);
 
@@ -126,15 +178,13 @@ namespace SF {
 
 	};
 
-	class IndexBuffer : Buffer {
+	class IndexBuffer : public Buffer {
 
 	private:
 		uint32_t m_Size;
 
-	protected:
-		IndexBuffer();
-
 	public:
+		IndexBuffer() {}
 		virtual ~IndexBuffer() = default;
 
 		static IndexBuffer* create(uint32_t* data, uint32_t size);

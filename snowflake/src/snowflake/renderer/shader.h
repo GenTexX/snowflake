@@ -18,8 +18,8 @@ namespace SF {
 		static Shader* create(const std::string& path);
 
 	public:
-		Shader();
-		~Shader();
+		Shader() {}
+		~Shader() {}
 
 		virtual void bind() const = 0;
 		virtual void unbind() const = 0;

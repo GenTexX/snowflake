@@ -12,3 +12,10 @@
 #include "snowflake/renderer/buffer.h"
 #include "snowflake/time/timestep.h"
 #include "snowflake/window/window.h"
+
+#define OPENGL
+
+#ifdef OPENGL
+#include "opengl/openGLBuffer.h"
+#include "opengl/openGLBuffer.h"
+#endif

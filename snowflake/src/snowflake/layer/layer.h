@@ -15,7 +15,7 @@ namespace SF {
 
 		virtual void onAttach() = 0;
 		virtual void onDetach() = 0;
-		virtual void onUpdate(Timestep ts) = 0;
+		virtual void onUpdate() = 0;
 		virtual void onImGuiRender() = 0;
 		virtual void onEvent(Event& event) = 0;
 

@@ -61,6 +61,10 @@ project "snowflake"
 	{	
 
 	}
+
+	defines {
+		"GLEW_STATIC"
+	}
 	
 	filter "system:windows"
 		systemversion "latest"
@@ -100,9 +104,9 @@ project "sandbox"
 
 	includedirs{
 		includeDir["SPDLOG"],
-		"%{includeDir.SDL}",
 		includeDir["SDL"],
 		includeDir["GLEW"],
+		includeDir["GLM"],
 		"snowflake/src"
 	}
 

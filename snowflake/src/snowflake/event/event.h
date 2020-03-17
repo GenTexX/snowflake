@@ -41,7 +41,7 @@ namespace SF {
 	struct Event
 	{
 
-		bool m_Handled;
+		bool m_Handled = false;
 
 		virtual EventType getEventType() const = 0;
 		virtual int getEventCategory() const = 0;
@@ -51,6 +51,31 @@ namespace SF {
 		bool isInCategory(EventCategory category) const { return (this->getEventCategory() & category) == category; }
 
 
+
+	};
+
+	class EventDispatcher {
+
+	private:
+		Event& m_Event;
+
+	public:
+		EventDispatcher(Event& e) : m_Event(e) {}
+		~EventDispatcher() {}
+
+		template<typename T, typename F>
+		bool dispatch(const F& function) {
+
+			if (this->m_Event.getEventType() == T::getStaticEventType()) {
+			
+				m_Event.m_Handled = function(static_cast<T&>(m_Event));
+				return true;
+			
+			}
+
+			return false;
+
+		}
 
 	};
 

@@ -5,7 +5,8 @@ namespace SF {
 
 	OpenGLVertexBuffer::OpenGLVertexBuffer(float* data, uint32_t size) {
 
-		glCreateBuffers(1, &(this->m_ID));
+		glGenBuffers(1, &(this->m_ID));
+
 		glBindBuffer(GL_ARRAY_BUFFER, this->m_ID);
 		glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
 
@@ -17,14 +18,6 @@ namespace SF {
 
 	}
 
-	OpenGLVertexBuffer* OpenGLVertexBuffer::create(float* data, uint32_t size) {
-
-		OpenGLVertexBuffer* buffer = new OpenGLVertexBuffer(data, size);
-
-		return buffer;
-
-	}
-
 	void OpenGLVertexBuffer::bind() const {
 
 		glBindBuffer(GL_ARRAY_BUFFER, this->m_ID);
@@ -33,7 +26,20 @@ namespace SF {
 
 	void OpenGLVertexBuffer::unbind() const {
 
+
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	}
+
+	const BufferLayout& OpenGLVertexBuffer::getLayout() const
+	{
+		return this->m_Layout;
+	}
+
+	void OpenGLVertexBuffer::setLayout(const BufferLayout& layout)
+	{
+
+		this->m_Layout = layout;
 
 	}
 
