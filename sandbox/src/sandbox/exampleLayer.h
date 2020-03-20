@@ -15,13 +15,12 @@ public:
 
 	virtual void onEvent(SF::Event& e) {
 	
-		SF_TRACE("ExampleLayer" + e.toString());
-		e.m_Handled = true;
 	
 	};
 
 	virtual void onUpdate() {
 		
+
 	
 	}
 	

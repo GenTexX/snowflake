@@ -27,6 +27,11 @@ libDir["SDL"] = "vendor/SDL/lib"
 --GLM
 includeDir["GLM"] = "vendor/glm/include"
 
+--IMGUI
+includeDir["IMGUI"] = "vendor/imgui"
+
+include "vendor/imgui"
+
 project "snowflake"
 	location "snowflake"
 	kind "StaticLib"
@@ -54,12 +59,13 @@ project "snowflake"
 		"%{includeDir.SPDLOG}",
 		"%{includeDir.GLEW}",
 		"%{includeDir.SDL}",
-		"%{includeDir.GLM}"
+		"%{includeDir.GLM}",
+		"%{includeDir.IMGUI}"
 	}
 	
 	links
 	{	
-
+		"imgui"
 	}
 
 	defines {
@@ -107,6 +113,7 @@ project "sandbox"
 		includeDir["SDL"],
 		includeDir["GLEW"],
 		includeDir["GLM"],
+		"%{includeDir.IMGUI}",
 		"snowflake/src"
 	}
 
@@ -129,11 +136,12 @@ project "sandbox"
 		"GLEW_STATIC"
 	}
 
-	defines {
-		"GLEW_STATIC"
+	linkoptions { "/ignore:4099" }
+
+	flags { 
+		"FatalCompileWarnings",
+		"FatalLinkWarnings"
 	}
-
-
 
 	filter "system:windows"
 		systemversion "latest"

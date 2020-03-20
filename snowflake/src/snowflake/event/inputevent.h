@@ -50,6 +50,27 @@ namespace SF {
 
 	};
 
+	struct KeyTypedEvent : Event{
+
+		char* m_Text;
+
+		KeyTypedEvent(char* text) { this->m_Text = text; }
+
+		std::string toString() const override {
+
+			std::stringstream ss;
+
+			ss << "KeyTyped\tText: " << this->m_Text;
+
+			return ss.str();
+
+		}
+
+		EVENT_CATEGORY(KeyboardEventCategory | InputEventCategory)
+		EVENT_TYPE(KeyTyped)
+
+	};
+
 	struct MouseEvent : Event
 	{
 

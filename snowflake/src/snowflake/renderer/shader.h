@@ -1,28 +1,38 @@
 #pragma once
 
+#include <string>
 #include <glm.hpp>
+#include "renderer.h"
 
 namespace SF {
 
 	class Shader {
 
-	private:
+	protected:
 		std::string m_Name;
 		
+		std::string m_Filename;
+		std::string m_Filepath;
+
 		uint32_t m_VertexID;
 		uint32_t m_TessControlID;
 		uint32_t m_TessEvaluationID;
 		uint32_t m_GeometryID;
 		uint32_t m_FragmentID;
 
-		static Shader* create(const std::string& path);
-
 	public:
 		Shader() {}
 		~Shader() {}
 
+		std::string getFilePath();
+
 		virtual void bind() const = 0;
 		virtual void unbind() const = 0;
+
+		virtual std::string readFile() = 0;
+		virtual void compile() = 0;
+
+		static Shader* create(const std::string& path);
 
 		/* UNIFORMS */
 		virtual void setInt(const std::string& name, int32_t val) = 0;

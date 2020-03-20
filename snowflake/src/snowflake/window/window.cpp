@@ -202,6 +202,8 @@ namespace SF {
 	{
 
 		Window* window = (Window*)data;
+		int id = event->window.windowID;
+
 		switch (event->type)
 		{
 		case SDL_WINDOWEVENT:
@@ -209,79 +211,80 @@ namespace SF {
 			case SDL_WINDOWEVENT_RESIZED: {
 				int w, h;
 				SDL_GetWindowSize(window->getSDL_Window(), &w, &h);
-				WindowResizeEvent e(w, h);
+				glViewport(0, 0, w, h);
+				WindowResizeEvent e(w, h, id);
 				window->eventCallback(e);
 				break;
 			}
 			case SDL_WINDOWEVENT_MOVED: {
 				int x, y;
 				SDL_GetWindowPosition(window->getSDL_Window(), &x, &y);
-				WindowMovedEvent e(x, y);
+				WindowMovedEvent e(x, y, id);
 				window->eventCallback(e);
 				break;
 			}
 			case SDL_WINDOWEVENT_MAXIMIZED: {
-				WindowMaximizeEvent e;
+				WindowMaximizeEvent e(id);
 				window->eventCallback(e);
 				break;
 			}
 			case SDL_WINDOWEVENT_MINIMIZED: {
-				WindowMinimizeEvent e;
+				WindowMinimizeEvent e(id);;
 				window->eventCallback(e);
 				break;
 			}
 			case SDL_WINDOWEVENT_HIDDEN: {
-				WindowHiddenEvent e;
+				WindowHiddenEvent e(id);;
 				window->eventCallback(e);
 				break;
 			}
 			case SDL_WINDOWEVENT_EXPOSED: {
-				WindowExposedEvent e;
+				WindowExposedEvent e(id);;
 				window->eventCallback(e);
 				break;
 			}
 			case SDL_WINDOWEVENT_LEAVE: {
-				WindowLeaveEvent e;
+				WindowLeaveEvent e(id);;
 				window->eventCallback(e);
 				break;
 			}
 			case SDL_WINDOWEVENT_ENTER: {
-				WindowEnterEvent e;
+				WindowEnterEvent e(id);;
 				window->eventCallback(e);
 				break;
 			}
 			case SDL_WINDOWEVENT_FOCUS_GAINED: {
-				WindowFocusGainEvent e;
+				WindowFocusGainEvent e(id);;
 				window->eventCallback(e);
 				break;
 			}
 			case SDL_WINDOWEVENT_FOCUS_LOST: {
-				WindowFocusLoseEvent e;
+				WindowFocusLoseEvent e(id);;
 				window->eventCallback(e);
 				break;
 			}
 			case SDL_WINDOWEVENT_RESTORED: {
-				WindowRestoreEvent e;
+				WindowRestoreEvent e(id);;
 				window->eventCallback(e);
 				break;
 			}
 			case SDL_WINDOWEVENT_SHOWN: {
-				WindowShownEvent e;
+				WindowShownEvent e(id);
 				window->eventCallback(e);
 				break;
 			}
 			case SDL_WINDOWEVENT_TAKE_FOCUS: {
-				WindowTakeFocusEvent e;
+				WindowTakeFocusEvent e(id);;
 				window->eventCallback(e);
 				break;
 			}
 			case SDL_WINDOWEVENT_HIT_TEST: {
-				WindowHitTestEvent e;
+				WindowHitTestEvent e(id);;
 				window->eventCallback(e);
 				break;
 			}
 			case SDL_WINDOWEVENT_CLOSE: {
-				WindowCloseEvent e;
+				WindowCloseEvent e(id);
 				window->eventCallback(e);
 				break;
 			}
@@ -310,12 +313,17 @@ namespace SF {
 			break;
 		}
 		case SDL_KEYDOWN: {
-			KeyPressedEvent e((KeyCode)event->key.keysym.sym);
+			KeyPressedEvent e((KeyCode)event->key.keysym.scancode);
 			window->eventCallback(e);
 			break;
 		}
 		case SDL_KEYUP: {
-			KeyReleasedEvent e((KeyCode)event->key.keysym.sym);
+			KeyReleasedEvent e((KeyCode)event->key.keysym.scancode);
+			window->eventCallback(e);
+			break;
+		}
+		case SDL_TEXTINPUT: {
+			KeyTypedEvent e(event->text.text);
 			window->eventCallback(e);
 			break;
 		}

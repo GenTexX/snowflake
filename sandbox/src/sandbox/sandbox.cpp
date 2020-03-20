@@ -1,29 +1,44 @@
 #include "sandbox.h"
 
 
-Sandbox::Sandbox() {
+void Sandbox::createWindow()
+{
+	this->m_ApplicationWindow = new SF::Window(1024, 768, "SNOWFLAKE", 100, 100, SDL_WINDOW_RESIZABLE | SDL_WINDOW_FOREIGN);
 
-
-}
-
-
-Sandbox::~Sandbox() {
+	this->m_ApplicationWindow->setEventCallback(BIND_EVENT_FN(Application::onEvent));
 
 }
+
+Sandbox::Sandbox() : SF::Application() {}
+
+
+Sandbox::~Sandbox() {}
 
 void Sandbox::onEvent(SF::Event& e) {
 	
 	Application::onEvent(e);
 
 	if (!e.m_Handled) {
-		SF_CORE_TRACE(e.toString());
+		
+		//SF_CORE_TRACE(e.toString());
 		e.m_Handled = true;
+	
 	}
 }
 
 void Sandbox::init() {
 
+	/*	
+	*	Application::init() needs to be called, 
+	*	cause in Appplications constructer, ther 
+	*	is no Sandbox-Instance instaciated 
+	*/
+	SF::Application::init();
+
 	SF_TRACE("INIT SANDBOX");
+
+	this->m_ImGuiLayer = new SF::ImGuiLayer();
+	this->pushOverLay(this->m_ImGuiLayer);
 
 	this->pushLayer(new ExampleLayer());
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -34,21 +49,24 @@ void Sandbox::run() {
 
 	SF_TRACE("RUN SANDBOX");
 
-	SF::OpenGLShader* shader = new SF::OpenGLShader("src/basic.shader");
+	SF::Shader* shader = SF::Shader::create("src/basic.shader");
+
+	this->m_ImGuiLayer->addWindow(new ShaderEditorWindow(shader));
 
 	shader->readFile();
 	shader->compile();
 
-	float verts[3 * 7] = {
+	float verts[4 * 7] = {
 
 	/*#### COORDS ####*/			/*###### COLOR #######*/
 	-0.5f,	-0.5f, 0.0f,			1.0f, 0.5f, 0.2f, 1.0f,
 	 0.5f,	-0.5f, 0.0f,			0.3f, 0.2f, 0.8f, 1.0f,
-	 0.0f,	 0.5f, 0.0f,			0.4f, 0.7f, 0.1f, 1.0f
+	 0.5f,	 0.5f, 0.0f,			0.4f, 0.7f, 0.1f, 1.0f,
+	 -0.5f,	 0.5f, 0.0f,			0.2f, 1.0f, 0.6f, 1.0f
 
 	};
 
-	GLuint ind[3] = { 0, 1, 2 };
+	GLuint ind[6] = { 0, 1, 2, 0, 2, 3 };
 
 	SF::VertexBuffer* vertexBuffer = SF::VertexBuffer::create(verts, sizeof(verts));
 	SF::IndexBuffer* indexBuffer = SF::IndexBuffer::create(ind, sizeof(ind));
@@ -59,27 +77,26 @@ void Sandbox::run() {
 
 	vertexBuffer->setLayout(bl);
 	
-	SF::OpenGLVertexArray* vao = new SF::OpenGLVertexArray();
+	SF::VertexArray* vao = SF::VertexArray::create();
 	vao->addVertexBuffer(vertexBuffer);
 	vao->setIndexBuffer(indexBuffer);
 
 
 	//GameLoop
-	while (!this->windowShouldClose()) {
-		
+	while (!this->isRunning()) {
+
+
 		vao->bind();
 		shader->bind();
 
 		
 
-		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
-
-
-
-		SF::Application::update();
+		SF::Application::onUpdate();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	}
+
 
 }

@@ -16,14 +16,6 @@ namespace SF {
 
 	}
 
-	OpenGLShader* OpenGLShader::create(std::string path) {
-
-		OpenGLShader* shader = new OpenGLShader(path);
-
-		return shader;
-
-	}
-
 	void OpenGLShader::bind() const
 	{
 
@@ -38,8 +30,10 @@ namespace SF {
 
 	}
 
-	void OpenGLShader::readFile()
+	std::string OpenGLShader::readFile()
 	{
+
+		std::string shaderstring;
 
 		/* open shader file */
 		FILE* shaderFile;
@@ -54,12 +48,15 @@ namespace SF {
 		char code_line[150];
 		enum ShaderReadMode { None = 0, Vertex = 1, Control = 2, Evaluation = 3, Geometry = 4, Fragment = 5 };
 		ShaderReadMode mode = None;
+		
+		SF_ASSERT(shaderFile,  "Shaderfile not existing");
 
-		if (shaderFile == NULL) SF_CORE_ERROR("Shaderfile not existing");
+		ret
 
 		while (fgets(code_line, 150, shaderFile) != NULL) {
 			
 			std::string line = code_line;
+			shaderstring += line;
 			/* select shader type */
 			if (line.find("#shader") != std::string::npos) {
 
@@ -121,6 +118,8 @@ namespace SF {
 		this->m_TessEvaluationSource = tessEvaluation.str();
 		this->m_GeometrySource = geometry.str();
 		this->m_FragmentSource = fragment.str();
+
+		return shaderstring;
 
 	}
 

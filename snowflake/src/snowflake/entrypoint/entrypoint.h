@@ -5,6 +5,7 @@
 #include <GL/glew.h>
 #include "snowflake/logging/log.h"
 #include "snowflake/application/application.h"
+#include "snowflake/core/core.h"
 #include <SDL.h>
 #include <SDL_opengl.h>
 

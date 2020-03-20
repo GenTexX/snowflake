@@ -1,40 +1,47 @@
 #pragma once
 #include <SDL.h>
+#include "snowflake/core/core.h"
 #include "snowflake/window/window.h"
 #include "snowflake/event/event.h"
 #include "snowflake/layer/layer.h"
 #include "snowflake/layer/layerStack.h"
+#include <imgui.h>
 
 namespace SF {
 
-#define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
 	class Application
 	{
 
-	private:
-		Window* m_ApplicationWindow;
+	protected:
+		Window *m_ApplicationWindow;
 		LayerStack m_LayerStack;
 	
+	private:
+		static Application* s_Instance;	//the only Application instance
+
+		virtual void createWindow() = 0;
 
 		void updateWindow();
 
 	public:
 		Application();
-		virtual ~Application() {}
+		virtual ~Application();
 
 		virtual void onEvent(Event& e);
 
-		bool windowShouldClose();
+		inline static Application& getInstance() { return *(s_Instance); }
+		inline Window* getWindow() const { return this->m_ApplicationWindow; }
 
-		void pushLayer(Layer* layer);
-		void pushOverLay(Layer* layer);
+		bool isRunning();		//check if Application is still Running
+		
+		void pushLayer(Layer* layer);	//push layer to layerstack
+		void pushOverLay(Layer* layer);	//push overlay to layerstack
 
+		void onUpdate();				//needs to be called every frame
 
-		void update();
-
-		virtual void init() {}
-		virtual void run() {}
+		virtual void init();		//is called when application is started
+		virtual void run() = 0;			//is called after
 
 	};
 

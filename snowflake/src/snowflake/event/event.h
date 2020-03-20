@@ -16,7 +16,7 @@ namespace SF {
 		WindowClose, WindowTakeFocus, WindowHitTest,
 
 		/* KEYBOARD */
-		KeyPressed, KeyReleased,
+		KeyPressed, KeyReleased, KeyTyped,
 	
 		/* MOUSE */
 		MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled,

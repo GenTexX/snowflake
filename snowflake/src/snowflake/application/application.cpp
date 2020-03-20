@@ -1,10 +1,28 @@
 #include "sfpch.h"
 #include "application.h"
+
+#include "snowflake/imgui/imGuiLayer.h"
+
 namespace SF {
+
+	Application* Application::s_Instance = nullptr;
+
 	Application::Application() {
 
-		this->m_ApplicationWindow = new Window(1024, 768, "SNOWFLAKE", 100, 100, SDL_WINDOW_RESIZABLE | SDL_WINDOW_FOREIGN);
-		this->m_ApplicationWindow->setEventCallback(BIND_EVENT_FN(onEvent));
+		/* Application is a Singleton -- check foe existing instance */
+		SF_ASSERT(!(this->s_Instance), "Multiple Applications. Application already exists!");
+
+		s_Instance = this;
+
+	}
+	Application::~Application() {
+
+		//SDL_SHUTDOWN
+		SDL_GL_DeleteContext(this->m_ApplicationWindow->getContext());
+		SDL_DestroyWindow(this->m_ApplicationWindow->getSDL_Window());
+		SDL_Quit();
+
+		delete this->m_ApplicationWindow;
 
 	}
 	void Application::onEvent(Event& e) {
@@ -20,7 +38,7 @@ namespace SF {
 
 	}
 
-	bool Application::windowShouldClose()
+	bool Application::isRunning()
 	{
 		return this->m_ApplicationWindow->shouldClose();
 	}
@@ -28,21 +46,31 @@ namespace SF {
 	void Application::pushLayer(Layer* layer) {
 
 		this->m_LayerStack.pushLayer(layer);
+		layer->onAttach();
 
 	}
 
 	void Application::pushOverLay(Layer* layer) {
 
 		this->m_LayerStack.pushOverlay(layer);
+		layer->onAttach();
 
 	}
 
-	void Application::update() {
+	void Application::onUpdate() {
 
 		for each (Layer * layer in this->m_LayerStack)
 			layer->onUpdate();
 
 		this->updateWindow();
+
+	}
+
+	void Application::init(){
+
+		//create Window
+		this->createWindow();
+
 
 	}
 

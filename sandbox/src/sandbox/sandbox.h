@@ -1,19 +1,15 @@
 #pragma once
-#include "opengl/openGLBuffer.h"
-#include "opengl/openGLShader.h"
-#include "opengl/openGLVertexArray.h"
-#include "snowflake/logging/log.h"
-#include "snowflake/application/application.h"
-#include "snowflake/window/window.h"
-#include "snowflake/event/event.h"
-#include "exapleLayer.h"
+#include "snowflake.h"
+#include "exampleLayer.h"
+#include "windows/shaderEditor.h"
 
 
 class Sandbox : public SF::Application
 {
 
 private:
-
+	virtual void createWindow() override;
+	SF::ImGuiLayer* m_ImGuiLayer = nullptr;
 
 public:
 	Sandbox();

@@ -6,6 +6,8 @@ namespace SF {
 
 	struct WindowEvent : Event {
 
+		uint8_t m_WindowID = 0;
+
 		std::string toString() const override {	return "WindowEvent"; }
 
 		EVENT_CATEGORY(WindowEventCategory)
@@ -15,9 +17,9 @@ namespace SF {
 
 	/* WINDOW EVENTS */
 
-	struct WindowShownEvent : WindowEvent {
+	struct WindowShownEvent : public WindowEvent {
 
-		WindowShownEvent() = default;
+		WindowShownEvent(uint8_t id) { this->m_WindowID = id;  };
 
 		std::string toString() const override {
 
@@ -35,7 +37,7 @@ namespace SF {
 
 	struct WindowHiddenEvent : WindowEvent {
 
-		WindowHiddenEvent() = default;
+		WindowHiddenEvent(uint8_t id) { this->m_WindowID = id; };
 
 		std::string toString() const override {
 
@@ -53,7 +55,7 @@ namespace SF {
 
 	struct WindowExposedEvent : WindowEvent {
 
-		WindowExposedEvent() = default;
+		WindowExposedEvent(uint8_t id) { this->m_WindowID = id; };
 
 		std::string toString() const override {
 
@@ -73,7 +75,7 @@ namespace SF {
 
 		int m_PosX, m_PosY;
 
-		WindowMovedEvent(const int& posx, const int& posy) : m_PosX(posx), m_PosY(posy) {};
+		WindowMovedEvent(const int& posx, const int& posy, uint8_t id) : m_PosX(posx), m_PosY(posy) { this->m_WindowID = id; };
 
 		std::string toString() const override {
 
@@ -94,7 +96,7 @@ namespace SF {
 
 		int m_Width, m_Height;
 
-		WindowResizeEvent(const int& width, const int& height) : m_Width(width), m_Height(height) {};
+		WindowResizeEvent(const int& width, const int& height, uint8_t id) : m_Width(width), m_Height(height) { this->m_WindowID = id; };
 		
 		std::string toString() const override {
 
@@ -112,7 +114,7 @@ namespace SF {
 
 	struct WindowMinimizeEvent : WindowEvent {
 
-		WindowMinimizeEvent() = default;
+		WindowMinimizeEvent(uint8_t id) { this->m_WindowID = id; };
 
 		std::string toString() const override {
 
@@ -130,7 +132,7 @@ namespace SF {
 
 	struct WindowMaximizeEvent : WindowEvent {
 
-		WindowMaximizeEvent() {};
+		WindowMaximizeEvent(uint8_t id) { this->m_WindowID = id; };
 
 		std::string toString() const override {
 
@@ -148,7 +150,7 @@ namespace SF {
 
 	struct WindowRestoreEvent : WindowEvent {
 
-		WindowRestoreEvent() = default;
+		WindowRestoreEvent(uint8_t id) { this->m_WindowID = id; };
 
 		std::string toString() const override {
 
@@ -166,7 +168,7 @@ namespace SF {
 
 	struct WindowEnterEvent : WindowEvent {
 
-		WindowEnterEvent() = default;
+		WindowEnterEvent(uint8_t id) { this->m_WindowID = id; };
 
 		std::string toString() const override {
 
@@ -184,7 +186,7 @@ namespace SF {
 
 	struct WindowLeaveEvent : WindowEvent {
 
-		WindowLeaveEvent() = default;
+		WindowLeaveEvent(uint8_t id) { this->m_WindowID = id; };
 
 		std::string toString() const override {
 
@@ -202,7 +204,7 @@ namespace SF {
 
 	struct WindowFocusGainEvent : WindowEvent {
 
-		WindowFocusGainEvent() = default;
+		WindowFocusGainEvent(uint8_t id) { this->m_WindowID = id; };
 
 		std::string toString() const override {
 
@@ -220,7 +222,7 @@ namespace SF {
 
 	struct WindowFocusLoseEvent : WindowEvent {
 
-		WindowFocusLoseEvent() = default;
+		WindowFocusLoseEvent(uint8_t id) { this->m_WindowID = id; };
 
 		std::string toString() const override {
 
@@ -238,7 +240,7 @@ namespace SF {
 
 	struct WindowCloseEvent : WindowEvent {
 
-		WindowCloseEvent() = default;
+		WindowCloseEvent(uint8_t id) { this->m_WindowID = id; };
 
 		std::string toString() const override {
 
@@ -256,7 +258,7 @@ namespace SF {
 
 	struct WindowTakeFocusEvent : WindowEvent {
 
-		WindowTakeFocusEvent() = default;
+		WindowTakeFocusEvent(uint8_t id) { this->m_WindowID = id; };
 
 		std::string toString() const override {
 
@@ -274,7 +276,7 @@ namespace SF {
 
 	struct WindowHitTestEvent : WindowEvent {
 
-		WindowHitTestEvent() = default;
+		WindowHitTestEvent(uint8_t id) { this->m_WindowID = id; };
 
 		std::string toString() const override {
 

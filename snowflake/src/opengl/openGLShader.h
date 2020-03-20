@@ -2,6 +2,7 @@
 #include <GL/glew.h>
 #include "snowflake/renderer/shader.h"
 #include "snowflake/logging/log.h"
+#include "snowflake/core/core.h"
 
 namespace SF {
 
@@ -11,8 +12,6 @@ namespace SF {
 	private:
 		uint32_t m_ProgramID;
 
-		std::string m_Filename;
-		std::string m_Filepath;
 
 		std::string m_VertexSource;
 		std::string m_TessControlSource;
@@ -30,16 +29,15 @@ namespace SF {
 
 	public:
 		OpenGLShader(std::string file);
-		~OpenGLShader();
+		~OpenGLShader() {}
 
-		static OpenGLShader* create(std::string path);
 
 		virtual void bind() const override;
 		virtual void unbind() const override;
 
-		void readFile();
+		std::string readFile() override;
 
-		void compile();
+		void compile() override;
 
 		/* UNIFORMS */
 
