@@ -1,14 +1,15 @@
 #include "sfpch.h"
 #include "vertexArray.h"
 #include "opengl/openGLVertexArray.h"
+#include "rendererAPI.h"
 
 namespace SF {
 
 	VertexArray* VertexArray::create()
 	{
-		switch (Renderer::getRendererAPI())
+		switch (RendererAPI::getRendererAPI())
 		{
-		case RendererAPI::OpenGL:
+		case RendererAPIEnum::OpenGL:
 			return (VertexArray*) new OpenGLVertexArray();
 		default:
 			break;

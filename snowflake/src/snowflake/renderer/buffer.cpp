@@ -1,16 +1,17 @@
 #include <sfpch.h>
 #include "buffer.h"
 #include "opengl/openGLBuffer.h"
-#include "renderer.h"
+#include "rendererAPI.h"
+
 
 namespace SF{
 
 	VertexBuffer* VertexBuffer::create(float* data, uint32_t size) {
 
-		switch (Renderer::getRendererAPI())
+		switch (RendererAPI::getRendererAPI())
 		{
 
-		case RendererAPI::OpenGL:
+		case RendererAPIEnum::OpenGL:
 			return (VertexBuffer*) new OpenGLVertexBuffer(data, size);
 			break;
 		default:
@@ -24,10 +25,10 @@ namespace SF{
 
 	IndexBuffer* IndexBuffer::create(uint32_t* data, uint32_t size) {
 
-		switch (Renderer::getRendererAPI())
+		switch (RendererAPI::getRendererAPI())
 		{
 
-		case RendererAPI::OpenGL:
+		case RendererAPIEnum::OpenGL:
 			return (IndexBuffer*) new OpenGLIndexBuffer(data, size);
 			break;
 		default:

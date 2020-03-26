@@ -1,5 +1,7 @@
 #pragma once
 
+#include <assert.h>
+
 #define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
 
 #ifdef SF_DEBUG

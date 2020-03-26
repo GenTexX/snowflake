@@ -1,16 +1,25 @@
 #pragma once
+#include "vertexArray.h"
+#include "rendererAPI.h"
 
 namespace SF {
 
-	enum class RendererAPI
-	{
-		OpenGL
-	};
+
+
 	class Renderer
 	{
-	public:
 
-		static RendererAPI getRendererAPI() { return RendererAPI::OpenGL; }
+	private:
+		static RendererAPI* s_Instance;
+
+		static void drawIndexed(const VertexArray* vao);
+
+	public:
+		static void beginScene();
+		static void endScene();
+
+		static void submit(const VertexArray* vao);
+
 
 	};
 

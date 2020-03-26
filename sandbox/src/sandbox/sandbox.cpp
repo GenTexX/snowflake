@@ -3,7 +3,8 @@
 
 void Sandbox::createWindow()
 {
-	this->m_ApplicationWindow = new SF::Window(1024, 768, "SNOWFLAKE", 100, 100, SDL_WINDOW_RESIZABLE | SDL_WINDOW_FOREIGN);
+
+	this->m_ApplicationWindow = new SF::Window(800, 600, "SNOWFLAKE", 100, 100, SDL_WINDOW_RESIZABLE | SDL_WINDOW_FOREIGN);
 
 	this->m_ApplicationWindow->setEventCallback(BIND_EVENT_FN(Application::onEvent));
 
@@ -20,7 +21,6 @@ void Sandbox::onEvent(SF::Event& e) {
 
 	if (!e.m_Handled) {
 		
-		//SF_CORE_TRACE(e.toString());
 		e.m_Handled = true;
 	
 	}
@@ -71,9 +71,7 @@ void Sandbox::run() {
 	SF::VertexBuffer* vertexBuffer = SF::VertexBuffer::create(verts, sizeof(verts));
 	SF::IndexBuffer* indexBuffer = SF::IndexBuffer::create(ind, sizeof(ind));
 	
-	SF::BufferLayout bl = {
-		{SF::BufferElementType::Float3, "VertexCoordinates"}, {SF::BufferElementType::Float4, "VertexColor"}
-	};
+	SF::BufferLayout bl = {{SF::BufferElementType::Float3, "VertexCoordinates"}, {SF::BufferElementType::Float4, "VertexColor"}};
 
 	vertexBuffer->setLayout(bl);
 	
@@ -85,13 +83,10 @@ void Sandbox::run() {
 	//GameLoop
 	while (!this->isRunning()) {
 
-
-		vao->bind();
+		SF::Renderer::beginScene();
 		shader->bind();
-
-		
-
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+		SF::Renderer::submit(vao);
+		SF::Renderer::endScene();
 
 		SF::Application::onUpdate();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

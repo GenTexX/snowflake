@@ -51,7 +51,6 @@ namespace SF {
 		
 		SF_ASSERT(shaderFile,  "Shaderfile not existing");
 
-		ret
 
 		while (fgets(code_line, 150, shaderFile) != NULL) {
 			

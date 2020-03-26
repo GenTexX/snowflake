@@ -1,6 +1,7 @@
 #include <sfpch.h>
 #include "shader.h"
 #include <opengl/openGLShader.h>
+#include "rendererAPI.h"
 
 namespace SF {
 
@@ -11,10 +12,10 @@ namespace SF {
 	
 	Shader* Shader::create(const std::string& path) {
 
-		switch (Renderer::getRendererAPI())
+		switch (RendererAPI::getRendererAPI())
 		{
 
-		case RendererAPI::OpenGL:
+		case RendererAPIEnum::OpenGL:
 			return (OpenGLShader*) new OpenGLShader(path);
 			break;
 		default:

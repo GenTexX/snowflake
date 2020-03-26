@@ -6,7 +6,6 @@ namespace SF {
 	class OpenGLVertexArray : public VertexArray
 	{
 
-
 	private:
 		uint32_t m_ID;
 		std::vector<VertexBuffer*> m_VertexBuffers;
@@ -19,9 +18,6 @@ namespace SF {
 
 		virtual void bind() const override;
 		virtual void unbind() const override;
-
-		virtual void addVertexBuffer(VertexBuffer* vertexBuffer) override;
-		virtual void setIndexBuffer(IndexBuffer* indexBuffer) override;
 
 	};
 }

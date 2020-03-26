@@ -2,10 +2,12 @@
 #include <stdlib.h>
 #include <iostream>
 #include <fstream>
+#include <cstring>
+
 void ShaderEditorWindow::onRender() {
 
 	char buff[100000];
-	std::strcpy(buff, this->m_Source.c_str());
+	strcpy_s(buff, 100000, this->m_Source.c_str());
 	ImGui::Begin(this->m_Title);
 	ImGui::InputTextMultiline("", buff, 100000, ImVec2(500.0f, 500.0f));
 	ImGui::SameLine();

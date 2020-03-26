@@ -5,6 +5,8 @@ namespace SF {
 
 	OpenGLVertexBuffer::OpenGLVertexBuffer(float* data, uint32_t size) {
 
+		this->m_Size = size;
+
 		glGenBuffers(1, &(this->m_ID));
 
 		glBindBuffer(GL_ARRAY_BUFFER, this->m_ID);
@@ -58,6 +60,8 @@ namespace SF {
 
 
 	OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t* data, uint32_t size) {
+
+		this->m_Size = size;
 
 		glCreateBuffers(1, &(this->m_ID));
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->m_ID);
