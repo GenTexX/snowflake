@@ -20,7 +20,7 @@ void main() {
 
 	vert_color = vertexcolor;
 
-	position = vertexPosition_modelspace + 0.1;
+	position = vertexPosition_modelspace + 0.4;
 
 }
 

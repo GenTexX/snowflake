@@ -8,7 +8,7 @@
 
 #define SF_ASSERT(x, ...) { if(!(x)) { assert(__VA_ARGS__); } }
 
-#elif
+#else
 
 #define SF_ASSERT(x, ...)
 
