@@ -5,12 +5,12 @@
 
 namespace SF {
 
-	VertexArray* VertexArray::create()
+	Ref<VertexArray> VertexArray::create()
 	{
 		switch (RendererAPI::getRendererAPI())
 		{
 		case RendererAPIEnum::OpenGL:
-			return (VertexArray*) new OpenGLVertexArray();
+			return createRef<OpenGLVertexArray>();
 		default:
 			break;
 		}

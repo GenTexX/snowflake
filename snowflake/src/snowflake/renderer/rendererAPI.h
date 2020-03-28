@@ -19,7 +19,7 @@ namespace SF {
 		RendererAPI();
 		~RendererAPI();
 
-		virtual inline void drawIndexed(const VertexArray* vao) = 0;
+		virtual inline void drawIndexed(const Ref<VertexArray> vao) = 0;
 
 		static RendererAPIEnum getRendererAPI() { return RendererAPIEnum::OpenGL; }
 

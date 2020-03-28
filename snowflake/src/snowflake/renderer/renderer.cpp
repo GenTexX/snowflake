@@ -6,7 +6,7 @@ namespace SF {
 
 	RendererAPI* Renderer::s_Instance = new OpenGLRendererAPI();
 
-	void Renderer::drawIndexed(const VertexArray* vao) {
+	void Renderer::drawIndexed(const Ref<VertexArray> vao) {
 	
 		s_Instance->drawIndexed(vao);
 	
@@ -22,7 +22,7 @@ namespace SF {
 	
 	}
 
-	void Renderer::submit(const VertexArray* vao) {
+	void Renderer::submit(const Ref<VertexArray> vao) {
 	
 		drawIndexed(vao);
 	

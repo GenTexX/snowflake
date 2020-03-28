@@ -29,10 +29,10 @@ namespace SF {
 		virtual void bind() const = 0;
 		virtual void unbind() const = 0;
 
-		virtual std::string readFile() = 0;
+		virtual void readFile() = 0;
 		virtual void compile() = 0;
 
-		static Shader* create(const std::string& path);
+		static Ref<Shader> create(const std::string& path);
 
 		/* UNIFORMS */
 		virtual void setInt(const std::string& name, int32_t val) = 0;

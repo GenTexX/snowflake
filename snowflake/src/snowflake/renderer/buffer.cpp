@@ -6,13 +6,13 @@
 
 namespace SF{
 
-	VertexBuffer* VertexBuffer::create(float* data, uint32_t size) {
+	Ref<VertexBuffer> VertexBuffer::create(float* data, uint32_t size) {
 
 		switch (RendererAPI::getRendererAPI())
 		{
 
 		case RendererAPIEnum::OpenGL:
-			return (VertexBuffer*) new OpenGLVertexBuffer(data, size);
+			return createRef<OpenGLVertexBuffer>(data, size);
 			break;
 		default:
 			break;
@@ -23,13 +23,13 @@ namespace SF{
 
 	}
 
-	IndexBuffer* IndexBuffer::create(uint32_t* data, uint32_t size) {
+	Ref<IndexBuffer> IndexBuffer::create(uint32_t* data, uint32_t size) {
 
 		switch (RendererAPI::getRendererAPI())
 		{
 
 		case RendererAPIEnum::OpenGL:
-			return (IndexBuffer*) new OpenGLIndexBuffer(data, size);
+			return createRef<OpenGLIndexBuffer>(data, size);
 			break;
 		default:
 			break;

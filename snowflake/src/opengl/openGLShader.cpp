@@ -30,11 +30,8 @@ namespace SF {
 
 	}
 
-	std::string OpenGLShader::readFile()
+	void OpenGLShader::readFile()
 	{
-
-		std::string shaderstring;
-
 		/* open shader file */
 		FILE* shaderFile;
 		shaderFile = fopen((this->m_Filepath + this->m_Filename).c_str(), "r");
@@ -55,7 +52,6 @@ namespace SF {
 		while (fgets(code_line, 150, shaderFile) != NULL) {
 			
 			std::string line = code_line;
-			shaderstring += line;
 			/* select shader type */
 			if (line.find("#shader") != std::string::npos) {
 
@@ -117,8 +113,6 @@ namespace SF {
 		this->m_TessEvaluationSource = tessEvaluation.str();
 		this->m_GeometrySource = geometry.str();
 		this->m_FragmentSource = fragment.str();
-
-		return shaderstring;
 
 	}
 

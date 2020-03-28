@@ -1,6 +1,7 @@
 #pragma once
 #include <GL/glew.h>
 #include <snowflake/logging/log.h>
+#include <snowflake/core/core.h>
 
 namespace SF {
 
@@ -158,8 +159,7 @@ namespace SF {
 	class VertexBuffer : public Buffer {
 
 	protected:
-		uint32_t m_Size;
-//		BufferLayout m_Layout;
+		uint32_t m_Size = 0;
 
 	public:
 		VertexBuffer() {}
@@ -171,7 +171,7 @@ namespace SF {
 		virtual void bind() const = 0;
 		virtual void unbind() const = 0;
 
-		static VertexBuffer* create(float* data, uint32_t size);
+		static Ref<VertexBuffer> create(float* data, uint32_t size);
 
 		const uint32_t& getSize() const { return this->m_Size; }
 
@@ -192,7 +192,7 @@ namespace SF {
 		virtual void bind() const = 0;
 		virtual void unbind() const = 0;
 
-		static IndexBuffer* create(uint32_t* data, uint32_t size);
+		static Ref<IndexBuffer> create(uint32_t* data, uint32_t size);
 
 		const uint32_t& getSize() const { return this->m_Size; }
 

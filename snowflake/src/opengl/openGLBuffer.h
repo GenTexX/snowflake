@@ -5,7 +5,7 @@
 
 namespace SF {
 
-	class OpenGLVertexBuffer : VertexBuffer {
+	class OpenGLVertexBuffer : public VertexBuffer {
 
 	private:
 		uint32_t m_ID;
@@ -27,7 +27,7 @@ namespace SF {
 		
 	};
 
-	class OpenGLIndexBuffer : IndexBuffer {
+	class OpenGLIndexBuffer : public IndexBuffer {
 
 	private:
 		uint32_t m_ID;

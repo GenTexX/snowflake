@@ -1,7 +1,5 @@
 #pragma once
 #include "snowflake.h"
-#include "exampleLayer.h"
-#include "windows/shaderEditor.h"
 
 
 class Sandbox : public SF::Application

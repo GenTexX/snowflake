@@ -7,19 +7,19 @@ namespace SF {
 	{
 
 	protected:
-		std::vector<VertexBuffer*> m_VertexBuffers;
-		IndexBuffer* m_IndexBuffer;
+		std::vector<Ref<VertexBuffer>> m_VertexBuffers;
+		Ref<IndexBuffer> m_IndexBuffer;
 
 	public:
 		VertexArray() = default;
 		~VertexArray() {}
 
-		static VertexArray* create();
+		static Ref<VertexArray> create();
 
 		virtual void bind() const = 0;
 		virtual void unbind() const = 0;
 
-		virtual void addVertexBuffer(VertexBuffer* vertexBuffer) {
+		virtual void addVertexBuffer(Ref<VertexBuffer> vertexBuffer) {
 		
 			this->bind();
 			vertexBuffer->bind();
@@ -37,7 +37,7 @@ namespace SF {
 
 		}
 
-		virtual void setIndexBuffer(IndexBuffer* indexBuffer) {
+		virtual void setIndexBuffer(Ref<IndexBuffer> indexBuffer) {
 		
 			this->m_IndexBuffer = indexBuffer;
 
@@ -46,7 +46,7 @@ namespace SF {
 		
 		}
 
-		IndexBuffer* getIndexBuffer() const { return this->m_IndexBuffer; };
+		Ref<IndexBuffer> getIndexBuffer() const { return this->m_IndexBuffer; };
 
 	};
 

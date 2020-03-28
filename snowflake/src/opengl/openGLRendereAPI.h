@@ -14,7 +14,7 @@ namespace SF {
 		OpenGLRendererAPI();
 		~OpenGLRendererAPI();
 
-		inline void drawIndexed(const VertexArray* vao) override;
+		inline void drawIndexed(const Ref<VertexArray> vao) override;
 
 	};
 

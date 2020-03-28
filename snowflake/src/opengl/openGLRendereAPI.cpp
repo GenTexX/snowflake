@@ -9,11 +9,9 @@ SF::OpenGLRendererAPI::~OpenGLRendererAPI()
 {
 }
 
-inline void SF::OpenGLRendererAPI::drawIndexed(const VertexArray* vao) {
+inline void SF::OpenGLRendererAPI::drawIndexed(const Ref<VertexArray> vao) {
 
 	vao->bind();
 	glDrawElements(GL_TRIANGLES, vao->getIndexBuffer()->getSize(), GL_UNSIGNED_INT, nullptr);
 
 }
-
-

@@ -35,7 +35,7 @@ namespace SF {
 		virtual void bind() const override;
 		virtual void unbind() const override;
 
-		std::string readFile() override;
+		void readFile() override;
 
 		void compile() override;
 
