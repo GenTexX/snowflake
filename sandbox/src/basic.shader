@@ -1,59 +1,28 @@
 
 #shader vertex
 
-layout(location = 0) in vec3 vertexPosition_modelspace;
-layout(location = 1) in vec4 vertexcolor;
+layout(location = 0) in vec4 vertexPosition_modelspace;
 
-out vec4 vert_color;
-
-out vec3 position;
-
-//hallihallo
+uniform mat4 u_Model;
+uniform mat4 u_View;
+uniform mat4 u_Projection;
 
 void main() {
 
+	vec4 vertexPosition_worldSpace = u_Model * vertexPosition_modelspace;
 
+	//gl_Position = u_Projection * (u_View * (vertexPosition_worldSpace));
 
-	gl_Position.xyz = vertexPosition_modelspace;
-
-	gl_Position.w = 1.0;
-
-	vert_color = vertexcolor;
-
-	position = vertexPosition_modelspace + 0.4;
+	gl_Position = u_Projection * ( u_View * vertexPosition_worldSpace);
 
 }
 
 
 #shader fragment
-in vec4 vert_color;
-
-in vec3 position;
-
-
-
-
-
-float random2d(vec2 pos) {
-
-	return fract(sin(dot(pos.xy, vec2(12, 80))) * 30000.0);
-
-}
-
-
 
 out vec4 color;
 
 void main() {
-
-
-
-	float noise = (random2d(position.xy) - 0.35f) * 0.1;
-
-
-
-
-
-	color = vert_color + noise;
+	color = vec4(0.8f, 0.4f, 0.2f, 1.0f);
 
 }

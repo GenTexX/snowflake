@@ -201,8 +201,8 @@ namespace SF {
 			SF_CORE_ERROR(msg);
 		}
 
-		glDetachShader(this->m_ProgramID, this->m_VertexID);
-		glDetachShader(this->m_ProgramID, this->m_FragmentID);
+		//glDetachShader(this->m_ProgramID, this->m_VertexID);
+		//glDetachShader(this->m_ProgramID, this->m_FragmentID);
 
 		glDeleteShader(this->m_VertexID);
 		glDeleteShader(this->m_FragmentID);
