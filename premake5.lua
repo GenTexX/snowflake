@@ -51,7 +51,7 @@ project "snowflake"
 	{
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp",
-	}
+J	}
 	
 	includedirs
 	{
@@ -98,7 +98,7 @@ project "sandbox"
 	cppdialect "C++17"
 	staticruntime "on"
 	postbuildcommands {
-		"copy ..\\vendor\\SDL\\lib\\SDL2.dll ..\\bin\\Debug-x86_64\\sandbox"
+		"copy ..\\vendor\\SDL\\lib\\SDL2.dll ..\\bin\\%{cfg.buildcfg}-%{cfg.architecture}\\sandbox"
 	}
 	targetdir("bin/" .. outputDir .. "/%{prj.name}")
 	objdir("bin-int/" .. outputDir .. "/%{prj.name}")

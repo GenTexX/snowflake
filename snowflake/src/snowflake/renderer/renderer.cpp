@@ -29,7 +29,7 @@ namespace SF {
 
 	void Renderer::init() {
 
-		s_QuadRenderData.shader = SF::Shader::create("src/basic.shader");
+		s_QuadRenderData.shader = SF::Shader::create("src/basic_quad.shader");
 
 		s_QuadRenderData.shader->readFile();
 		s_QuadRenderData.shader->compile();
@@ -76,7 +76,7 @@ namespace SF {
 
 	}
 
-	void Renderer::drawQuad(glm::vec2& position, glm::vec2& size, float rotation) {
+	void Renderer::drawQuad(glm::vec2& position, glm::vec2& size, float rotation, glm::vec4& color) {
 
 		glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(position, 1.0f)) *
 			glm::rotate(glm::mat4(1.0f), glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f)) *
@@ -87,6 +87,8 @@ namespace SF {
 		s_QuadRenderData.shader->setMat4("u_View", s_Camera.getViewMatrix());
 		s_QuadRenderData.shader->setMat4("u_Projection", s_Camera.getProjectionMatrix());
 		s_QuadRenderData.shader->setMat4("u_Model", model);
+
+		s_QuadRenderData.shader->setFloat4("u_Color", color);
 
 		Renderer::submit(s_QuadRenderData.vao);
 
