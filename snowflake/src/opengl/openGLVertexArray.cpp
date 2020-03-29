@@ -10,8 +10,7 @@ SF::OpenGLVertexArray::OpenGLVertexArray() {
 SF::OpenGLVertexArray::~OpenGLVertexArray()
 {
 
-	for (const auto buffer : this->m_VertexBuffers)
-	{
+	for (const auto buffer : this->m_VertexBuffers)	{
 		delete buffer;
 	}
 

@@ -1,7 +1,7 @@
 #pragma once
 #include "snowflake.h"
 
-class Sandbox2D : SF::Layer {
+class Sandbox2D : public SF::Layer {
 
 private:
 	SF::OrthographicCameraController m_CameraController;

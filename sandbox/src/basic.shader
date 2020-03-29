@@ -11,8 +11,6 @@ void main() {
 
 	vec4 vertexPosition_worldSpace = u_Model * vertexPosition_modelspace;
 
-	//gl_Position = u_Projection * (u_View * (vertexPosition_worldSpace));
-
 	gl_Position = u_Projection * ( u_View * vertexPosition_worldSpace);
 
 }
