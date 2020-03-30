@@ -30,7 +30,11 @@ includeDir["GLM"] = "vendor/glm/include"
 --IMGUI
 includeDir["IMGUI"] = "vendor/imgui"
 
+--STB
+includeDir["STB"] = "vendor/stb"
+
 include "vendor/imgui"
+include "vendor/stb"
 
 project "snowflake"
 	location "snowflake"
@@ -60,12 +64,14 @@ J	}
 		"%{includeDir.GLEW}",
 		"%{includeDir.SDL}",
 		"%{includeDir.GLM}",
-		"%{includeDir.IMGUI}"
+		"%{includeDir.IMGUI}",
+		"%{includeDir.STB}"
 	}
 	
 	links
 	{	
-		"imgui"
+		"imgui",
+		"stb"
 	}
 
 	defines {
@@ -113,7 +119,8 @@ project "sandbox"
 		includeDir["SDL"],
 		includeDir["GLEW"],
 		includeDir["GLM"],
-		"%{includeDir.IMGUI}",
+		includeDir["IMGUI"],
+		includeDir["STB"],
 		"snowflake/src"
 	}
 
