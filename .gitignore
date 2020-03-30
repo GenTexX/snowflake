@@ -363,3 +363,7 @@ snowflake/snowflake.vcxproj.user
 sandbox/sandbox.vcxproj
 sandbox/sandbox.vcxproj.filters
 sandbox/sandbox.vcxproj.user
+
+#submodules
+vendor/imgui
+vendor/stb
