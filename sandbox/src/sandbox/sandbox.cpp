@@ -5,9 +5,12 @@
 void Sandbox::createWindow()
 {
 
+
 	this->m_ApplicationWindow = new SF::Window(800, 600, "SNOWFLAKE", 100, 100, SDL_WINDOW_RESIZABLE | SDL_WINDOW_FOREIGN);
 
 	this->m_ApplicationWindow->setEventCallback(BIND_EVENT_FN(Application::onEvent));
+
+	glEnable(GL_BLEND);
 
 }
 
