@@ -35,6 +35,7 @@ includeDir["STB"] = "vendor/stb"
 
 include "vendor/imgui"
 include "vendor/stb"
+include "vendor/spdlog"
 
 project "snowflake"
 	location "snowflake"
@@ -71,7 +72,8 @@ J	}
 	links
 	{	
 		"imgui",
-		"stb"
+		"stb",
+		"spdlog"
 	}
 
 	defines {
