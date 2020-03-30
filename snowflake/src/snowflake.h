@@ -14,6 +14,7 @@
 #include "snowflake/renderer/buffer.h"
 #include "snowflake/renderer/shader.h"
 #include "snowflake/renderer/camera.h"
+#include "snowflake/renderer/texture.h"
 #include "snowflake/renderer/vertexArray.h"
 #include "snowflake/time/timestep.h"
 #include "snowflake/window/window.h"

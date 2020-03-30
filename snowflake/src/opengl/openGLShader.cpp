@@ -16,6 +16,12 @@ namespace SF {
 
 	}
 
+	OpenGLShader::~OpenGLShader() {
+
+		glDeleteShader(this->m_ProgramID);
+
+	}
+
 	void OpenGLShader::bind() const
 	{
 

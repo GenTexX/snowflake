@@ -4,6 +4,3 @@
 [submodule "vendor/imgui"]
 	path = vendor/imgui
 	url = https://github.com/GenTexX/imgui
-[submodule "vendor/stb"]
-	path = vendor/stb
-	url = https://github.com/GenTexX/stb
