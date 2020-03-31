@@ -365,6 +365,4 @@ sandbox/sandbox.vcxproj.filters
 sandbox/sandbox.vcxproj.user
 
 #submodules
-vendor/imgui
-vendor/stb
-vendor/spdlog
+vendor/imgui/*
