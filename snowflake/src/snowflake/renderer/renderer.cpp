@@ -15,7 +15,8 @@ namespace SF {
 
 	};
 
-	static RenderData s_QuadRenderData;
+	static RenderData s_ColoredQuadRenderData;
+	static RenderData s_TexturedQuadRenderData;
 
 	RendererAPI* Renderer::s_Instance = new OpenGLRendererAPI();
 
@@ -28,35 +29,73 @@ namespace SF {
 	}
 
 	void Renderer::init() {
+		
+			/************************************************/
+			/*************** COLORED QUAD *******************/
+			/************************************************/
+		{
+			s_ColoredQuadRenderData.shader = SF::Shader::create("src/basic_quad.shader");
 
-		s_QuadRenderData.shader = SF::Shader::create("src/basic_quad.shader");
+			s_ColoredQuadRenderData.shader->readFile();
+			s_ColoredQuadRenderData.shader->compile();
 
-		s_QuadRenderData.shader->readFile();
-		s_QuadRenderData.shader->compile();
+			float verts[4 * 4] = {
 
-		float verts[4 * 4] = {
+				/*######## COORDS ########*/
+				-0.5f,	-0.5f,  0.0f,  1.0f,
+				 0.5f,	-0.5f,  0.0f,  1.0f,
+				 0.5f,	 0.5f,  0.0f,  1.0f,
+				-0.5f,	 0.5f,  0.0f,  1.0f
 
-			/*######## COORDS ########*/
-			-0.5f,	-0.5f,  0.0f,  1.0f,
-			 0.5f,	-0.5f,  0.0f,  1.0f,
-			 0.5f,	 0.5f,  0.0f,  1.0f,
-			-0.5f,	 0.5f,  0.0f,  1.0f
+			};
 
-		};
+			GLuint ind[6] = { 0, 1, 2, 0, 2, 3 };
 
-		GLuint ind[6] = { 0, 1, 2, 0, 2, 3 };
+			s_ColoredQuadRenderData.vertexBuffer = SF::VertexBuffer::create(verts, sizeof(verts));
+			s_ColoredQuadRenderData.indexBuffer = SF::IndexBuffer::create(ind, sizeof(ind));
 
-		s_QuadRenderData.vertexBuffer = SF::VertexBuffer::create(verts, sizeof(verts));
-		s_QuadRenderData.indexBuffer = SF::IndexBuffer::create(ind, sizeof(ind));
+			SF::BufferLayout bl = { {SF::BufferElementType::Float4, "VertexCoordinates"} };
 
-		SF::BufferLayout bl = { {SF::BufferElementType::Float4, "VertexCoordinates"} };
+			s_ColoredQuadRenderData.vertexBuffer->setLayout(bl);
 
-		s_QuadRenderData.vertexBuffer->setLayout(bl);
+			s_ColoredQuadRenderData.vao = SF::VertexArray::create();
+			s_ColoredQuadRenderData.vao->addVertexBuffer(s_ColoredQuadRenderData.vertexBuffer);
+			s_ColoredQuadRenderData.vao->setIndexBuffer(s_ColoredQuadRenderData.indexBuffer);
+		}
 
-		s_QuadRenderData.vao = SF::VertexArray::create();
-		s_QuadRenderData.vao->addVertexBuffer(s_QuadRenderData.vertexBuffer);
-		s_QuadRenderData.vao->setIndexBuffer(s_QuadRenderData.indexBuffer);
+		/************************************************/
+		/*************** COLORED QUAD *******************/
+		/************************************************/
+		{
+			s_TexturedQuadRenderData.shader = SF::Shader::create("src/basic_texquad.shader");
 
+			s_TexturedQuadRenderData.shader->readFile();
+			s_TexturedQuadRenderData.shader->compile();
+
+			float verts[4 * 6] = {
+
+				/*######## COORDS ########*/		/*##TEX COORDS ###*/
+				-0.5f,	-0.5f,  0.0f,  1.0f,			 0.0f,  0.0f,
+				 0.5f,	-0.5f,  0.0f,  1.0f,			1.0f,  0.0f,
+				 0.5f,	 0.5f,  0.0f,  1.0f,			1.0f, 1.0f,
+				-0.5f,	 0.5f,  0.0f,  1.0f,			 0.0f, 1.0f
+
+			};
+
+			GLuint ind[6] = { 0, 1, 2, 0, 2, 3 };
+
+			s_TexturedQuadRenderData.vertexBuffer = SF::VertexBuffer::create(verts, sizeof(verts));
+			s_TexturedQuadRenderData.indexBuffer = SF::IndexBuffer::create(ind, sizeof(ind));
+
+			SF::BufferLayout bl = { {SF::BufferElementType::Float4, "VertexCoordinates"}, {SF::BufferElementType::Float2, "TextureCoordinates"} };
+
+			s_TexturedQuadRenderData.vertexBuffer->setLayout(bl);
+
+			s_TexturedQuadRenderData.vao = SF::VertexArray::create();
+			s_TexturedQuadRenderData.vao->addVertexBuffer(s_TexturedQuadRenderData.vertexBuffer);
+			s_TexturedQuadRenderData.vao->setIndexBuffer(s_TexturedQuadRenderData.indexBuffer);
+
+		}
 	}
 
 	void Renderer::beginScene(OrthographicCamera& camera) {
@@ -82,15 +121,34 @@ namespace SF {
 			glm::rotate(glm::mat4(1.0f), glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f)) *
 			glm::scale(glm::mat4(1.0f), glm::vec3(size.x, size.y, 1.0f));
 
-		s_QuadRenderData.shader->bind();
+		s_ColoredQuadRenderData.shader->bind();
 
-		s_QuadRenderData.shader->setMat4("u_View", s_Camera.getViewMatrix());
-		s_QuadRenderData.shader->setMat4("u_Projection", s_Camera.getProjectionMatrix());
-		s_QuadRenderData.shader->setMat4("u_Model", model);
+		s_ColoredQuadRenderData.shader->setMat4("u_View", s_Camera.getViewMatrix());
+		s_ColoredQuadRenderData.shader->setMat4("u_Projection", s_Camera.getProjectionMatrix());
+		s_ColoredQuadRenderData.shader->setMat4("u_Model", model);
 
-		s_QuadRenderData.shader->setFloat4("u_Color", color);
+		s_ColoredQuadRenderData.shader->setFloat4("u_Color", color);
 
-		Renderer::submit(s_QuadRenderData.vao);
+		Renderer::submit(s_ColoredQuadRenderData.vao);
+
+	}
+
+	void Renderer::drawQuad(glm::vec2& position, glm::vec2& size, float rotation, Ref<Texture> texture) {
+	
+		glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(position, 1.0f)) *
+			glm::rotate(glm::mat4(1.0f), glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f)) *
+			glm::scale(glm::mat4(1.0f), glm::vec3(size.x, size.y, 1.0f));
+
+		s_TexturedQuadRenderData.shader->bind();
+
+		s_TexturedQuadRenderData.shader->setMat4("u_View", s_Camera.getViewMatrix());
+		s_TexturedQuadRenderData.shader->setMat4("u_Projection", s_Camera.getProjectionMatrix());
+		s_TexturedQuadRenderData.shader->setMat4("u_Model", model);
+
+		texture->bind(0);
+		s_TexturedQuadRenderData.shader->setInt("u_Texture", texture->getSlot());
+
+		Renderer::submit(s_TexturedQuadRenderData.vao);
 
 	}
 

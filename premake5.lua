@@ -34,7 +34,6 @@ includeDir["IMGUI"] = "vendor/imgui"
 includeDir["STB"] = "vendor/stb"
 
 include "vendor/imgui"
-include "vendor/stb"
 
 project "snowflake"
 	location "snowflake"
@@ -55,7 +54,9 @@ project "snowflake"
 	{
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp",
-J	}
+		"%{prj.name}/vendor/stb/**.h",
+		"%{prj.name}/vendor/stb/**.cpp"
+	}
 	
 	includedirs
 	{
@@ -70,8 +71,7 @@ J	}
 	
 	links
 	{	
-		"imgui",
-		"stb"
+		"imgui"
 	}
 
 	defines {

@@ -5,12 +5,9 @@
 void Sandbox::createWindow()
 {
 
-
 	this->m_ApplicationWindow = new SF::Window(800, 600, "SNOWFLAKE", 100, 100, SDL_WINDOW_RESIZABLE | SDL_WINDOW_FOREIGN);
 
 	this->m_ApplicationWindow->setEventCallback(BIND_EVENT_FN(Application::onEvent));
-
-	glEnable(GL_BLEND);
 
 }
 
@@ -33,7 +30,7 @@ void Sandbox::init() {
 	/*	
 	*	Application::init() needs to be called, 
 	*	cause in Appplications constructer, ther 
-	*	is no Sandbox-Instance instaciated 
+	*	is no Sandbox-Instance instaciated
 	*/
 	SF::Application::init();
 
@@ -41,7 +38,6 @@ void Sandbox::init() {
 
 	this->m_ImGuiLayer = new SF::ImGuiLayer();
 	this->pushOverLay(this->m_ImGuiLayer);
-	this->pushLayer(new Sandbox2D());
 
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
@@ -50,7 +46,8 @@ void Sandbox::init() {
 void Sandbox::run() {
 
 	SF_TRACE("RUN SANDBOX");
-	
+
+	this->pushLayer(new Sandbox2D());
 	SF::Renderer::init();
 
 	SF::OrthographicCameraController camController(0.0f, 0.0f);

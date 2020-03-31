@@ -3,6 +3,7 @@
 
 Sandbox2D::Sandbox2D() : m_CameraController(){
 
+	this->m_QuadTexture = SF::Texture::create("test_texture.png");
 
 }
 
@@ -18,19 +19,32 @@ void Sandbox2D::onEvent(SF::Event& event) {
 
 void Sandbox2D::onUpdate() {
 
-	if (SF::Input::IsKeyPressed(SF::KeyCode::SFK_w))
+	if (SF::Input::isKeyPressed(SF::KeyCode::SFK_w))
 		this->m_CameraController.moveY(0.03f);
-	if (SF::Input::IsKeyPressed(SF::KeyCode::SFK_s))
+	if (SF::Input::isKeyPressed(SF::KeyCode::SFK_s))
 		this->m_CameraController.moveY(-0.03f);
-	if (SF::Input::IsKeyPressed(SF::KeyCode::SFK_a))
+	if (SF::Input::isKeyPressed(SF::KeyCode::SFK_a))
 		this->m_CameraController.moveX(-0.03f);
-	if (SF::Input::IsKeyPressed(SF::KeyCode::SFK_d))
+	if (SF::Input::isKeyPressed(SF::KeyCode::SFK_d))
 		this->m_CameraController.moveX(0.03f);
 
 	SF::Renderer::beginScene(this->m_CameraController.getCamera());
-	SF::Renderer::drawQuad(glm::vec2(0.0f, 0.0f), glm::vec2(0.5f, 0.5f), 45.0f, glm::vec4(0.2f, 0.4f, 0.2f, 1.0f));
-	SF::Renderer::drawQuad(glm::vec2(1.0f, 2.0f), glm::vec2(0.2f, 1.5f), -10.0f, glm::vec4(0.8f, 0.4f, 0.2f, 1.0f));
-	SF::Renderer::drawQuad(glm::vec2(-1.0f, 1.4f), glm::vec2(0.4f, 0.75f), 65.0f, glm::vec4(0.1f, 0.4f, 0.8f, 1.0f));
+	
+
+	bool colortoggle = false;
+	for (size_t i = 0; i < 27; i++) {
+		for (size_t j = 0; j < 21; j++) {
+			if (colortoggle) {
+				SF::Renderer::drawQuad(glm::vec2(-3.9 + 0.3f * i, -2.9 + j * 0.3f), glm::vec2(0.3f, 0.3f), 0.0f, glm::vec4(0.6f, 0.6f, 0.6f, 1.0f));
+			}
+			else {
+				SF::Renderer::drawQuad(glm::vec2(-3.9 + 0.3f * i, -2.9 + j * 0.3f), glm::vec2(0.3f, 0.3f), 0.0f, glm::vec4(0.9f, 0.9f, 0.9f, 1.0f));
+			}
+			colortoggle = !colortoggle;
+		}
+	}
+
+	SF::Renderer::drawQuad(glm::vec2(1.0f, 0.0f), glm::vec2(1.0f, 1.0f), 00.0f, this->m_QuadTexture);
 	SF::Renderer::endScene();
 	
 }

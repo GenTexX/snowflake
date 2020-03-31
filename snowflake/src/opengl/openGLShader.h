@@ -29,7 +29,7 @@ namespace SF {
 
 	public:
 		OpenGLShader(std::string file);
-		~OpenGLShader() {}
+		~OpenGLShader();
 
 
 		virtual void bind() const override;
