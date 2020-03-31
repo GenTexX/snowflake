@@ -17,23 +17,26 @@ void Sandbox2D::onEvent(SF::Event& event) {
 
 }
 
-void Sandbox2D::onUpdate() {
+void Sandbox2D::onUpdate(float deltatime) {
+
+	SF_TRACE("DELTA: {:03.3f}ms", deltatime);
+
+	float vel = 0.005f * deltatime;
 
 	if (SF::Input::isKeyPressed(SF::KeyCode::SFK_w))
-		this->m_CameraController.moveY(0.03f);
+		this->m_CameraController.moveY(vel);
 	if (SF::Input::isKeyPressed(SF::KeyCode::SFK_s))
-		this->m_CameraController.moveY(-0.03f);
+		this->m_CameraController.moveY(-vel);
 	if (SF::Input::isKeyPressed(SF::KeyCode::SFK_a))
-		this->m_CameraController.moveX(-0.03f);
+		this->m_CameraController.moveX(-vel);
 	if (SF::Input::isKeyPressed(SF::KeyCode::SFK_d))
-		this->m_CameraController.moveX(0.03f);
+		this->m_CameraController.moveX(vel);
 
 	SF::Renderer::beginScene(this->m_CameraController.getCamera());
-	
 
 	bool colortoggle = false;
-	for (size_t i = 0; i < 27; i++) {
-		for (size_t j = 0; j < 21; j++) {
+	for (size_t i = 0; i < 18; i++) {
+		for (size_t j = 0; j < 15; j++) {
 			if (colortoggle) {
 				SF::Renderer::drawQuad(glm::vec2(-3.9 + 0.3f * i, -2.9 + j * 0.3f), glm::vec2(0.3f, 0.3f), 0.0f, glm::vec4(0.6f, 0.6f, 0.6f, 1.0f));
 			}

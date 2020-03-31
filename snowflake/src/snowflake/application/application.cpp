@@ -2,6 +2,7 @@
 #include "application.h"
 
 #include "snowflake/imgui/imGuiLayer.h"
+#include "snowflake/platform/platform.h"
 
 namespace SF {
 
@@ -59,10 +60,15 @@ namespace SF {
 
 	void Application::onUpdate() {
 
+		float now = Platform::getTime();
+		float deltatime = now - this->m_LastUpdate;
+
 		for each (Layer * layer in this->m_LayerStack)
-			layer->onUpdate();
+			layer->onUpdate(deltatime);
 
 		this->updateWindow();
+
+		this->m_LastUpdate = now;
 
 	}
 

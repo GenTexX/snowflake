@@ -11,7 +11,7 @@ public:
 	~Sandbox2D();
 
 	void onEvent(SF::Event& event);
-	void onUpdate();
+	void onUpdate(float deltatime);
 	void onAttach();
 	void onDetach();
 	void onImGuiRender();

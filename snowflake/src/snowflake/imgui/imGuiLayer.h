@@ -85,7 +85,7 @@ namespace SF {
 		void onDetach() override;
 
 		void onEvent(Event& e) override;
-		void onUpdate();
+		void onUpdate(float deltatime);
 
 		void addWindow(ImGuiWindow* window);
 		void removeWindow(ImGuiWindow* window);

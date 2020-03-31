@@ -18,6 +18,7 @@
 #include "snowflake/renderer/vertexArray.h"
 #include "snowflake/time/timestep.h"
 #include "snowflake/window/window.h"
+#include "snowflake/platform/platform.h"
 #include <imgui.h>
 
 #define OPENGL

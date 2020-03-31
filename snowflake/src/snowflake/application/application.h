@@ -18,6 +18,7 @@ namespace SF {
 		LayerStack m_LayerStack;
 	
 	private:
+		float m_LastUpdate = 0.0;
 		static Application* s_Instance;	//the only Application instance
 
 		virtual void createWindow() = 0;
