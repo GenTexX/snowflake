@@ -1,5 +1,5 @@
-
 #shader vertex
+#version 410
 
 layout(location = 0) in vec4 vertexPosition_modelspace;
 
@@ -17,6 +17,7 @@ void main() {
 
 
 #shader fragment
+#version 410
 
 out vec4 color;
 
