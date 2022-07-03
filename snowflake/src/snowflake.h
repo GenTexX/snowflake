@@ -19,6 +19,11 @@
 #include "snowflake/time/timestep.h"
 #include "snowflake/window/window.h"
 #include "snowflake/platform/platform.h"
+#include "snowflake/scene/renderable.h"
+#include "snowflake/scene/scene.h"
+#include "snowflake/scene/sceneobjects/sceneObject.h"
+#include "snowflake/scene/sceneobjects/cameraObject.h"
+#include "snowflake/scene/sceneobjects/renderableObject.h"
 #include <imgui.h>
 
 #define OPENGL

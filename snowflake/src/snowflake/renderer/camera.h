@@ -51,6 +51,7 @@ namespace SF {
 
 		void moveX(float distance = 0.1f);
 		void moveY(float distance = 0.1f);
+		void move(glm::vec3& direction);
 
 		OrthographicCamera& getCamera() { return this->m_Camera; }
 

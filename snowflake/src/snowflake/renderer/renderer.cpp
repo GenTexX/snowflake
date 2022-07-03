@@ -2,6 +2,10 @@
 #include "renderer.h"
 #include "opengl/openGLRendereAPI.h"
 #include "shader.h"
+#include "snowflake/scene/scene.h"
+#include "snowflake/scene/sceneobjects/sceneObject.h"
+#include "snowflake/scene/sceneobjects/cameraObject.h"
+#include "snowflake/scene/sceneobjects/renderableObject.h"
 
 
 namespace SF {
@@ -96,6 +100,46 @@ namespace SF {
 			s_TexturedQuadRenderData.vao->setIndexBuffer(s_TexturedQuadRenderData.indexBuffer);
 
 		}
+	}
+
+	void Renderer::drawScene(Ref<Scene> scene) {
+
+		Renderer::beginScene(scene->getCamera()->getCamera());
+
+		for (auto sceneObject : *scene)	{
+			switch (sceneObject->type())
+			{
+
+			case SceneObjectType::RENDERABLE_OBJECT:
+			{
+				Ref<RenderableObject> renderableObject = std::static_pointer_cast<RenderableObject>(sceneObject);
+				switch (renderableObject->getRenderable().type())
+				{
+				case RenderableType::TEXTURED_QUAD:
+				{
+					TexturedQuad quad = static_cast<TexturedQuad&>(renderableObject->getRenderable());
+					Renderer::drawQuad(glm::vec2(quad.getPosition()), glm::vec2(quad.getSize()), 0.0f, quad.getTexture());
+					break;
+				}
+				case RenderableType::COLORED_QUAD:
+					break;
+
+				default:
+					break;
+				}
+
+				break;
+			}
+			case SceneObjectType::CAMERA_OBJECT:
+				break;
+
+			default:
+				break;
+			}
+		}
+
+		Renderer::endScene();
+
 	}
 
 	void Renderer::beginScene(OrthographicCamera& camera) {

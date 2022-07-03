@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include <SDL_opengl.h>
 #include <string>
+#pragma warning(disable : 26812)
 
 namespace SF {
 
@@ -90,3 +91,6 @@ namespace SF {
 						 virtual SF::EventType getEventType() const override { return getStaticEventType(); }
 
 #define EVENT_CATEGORY(category) virtual int getEventCategory() const override { return category; }
+
+
+#pragma warning(default : 26812)

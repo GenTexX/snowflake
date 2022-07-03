@@ -2,6 +2,8 @@
 #include <sstream>
 #include "event.h"
 #include "keycode.h"
+#pragma warning(disable : 26812)
+
 namespace SF {
 
 
@@ -186,3 +188,5 @@ namespace SF {
 
 
 }
+
+#pragma warning(default : 26812)

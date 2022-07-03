@@ -117,4 +117,10 @@ namespace SF {
 
 	}
 
+	void OrthographicCameraController::move(glm::vec3& direction) {
+
+		this->m_Camera.addPosition(direction);
+
+	}
+
 }

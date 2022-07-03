@@ -11,7 +11,7 @@ namespace SF {
 
 		auto now = std::chrono::high_resolution_clock::now();
 
-		return std::chrono::duration_cast<std::chrono::microseconds>(now - this->m_StartTime).count() * 0.001;
+		return std::chrono::duration_cast<std::chrono::microseconds>(now - this->m_StartTime).count() * 0.001f;
 
 	}
 

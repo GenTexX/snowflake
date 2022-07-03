@@ -5,10 +5,9 @@
 #include "texture.h"
 #include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
+#include "snowflake/scene/scene.h"
 
 namespace SF {
-
-
 
 	class Renderer
 	{
@@ -20,6 +19,8 @@ namespace SF {
 
 	public:
 		static void init();
+
+		static void drawScene(Ref<Scene> scene);
 
 		static void beginScene(OrthographicCamera& camera);
 		static void endScene();
