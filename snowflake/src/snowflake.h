@@ -20,10 +20,13 @@
 #include "snowflake/window/window.h"
 #include "snowflake/platform/platform.h"
 #include "snowflake/scene/renderable.h"
+#include "snowflake/scene/texturedQuad.h"
+#include "snowflake/scene/coloredQuad.h"
 #include "snowflake/scene/scene.h"
 #include "snowflake/scene/sceneobjects/sceneObject.h"
 #include "snowflake/scene/sceneobjects/cameraObject.h"
 #include "snowflake/scene/sceneobjects/renderableObject.h"
+#include "snowflake/scene/sceneSerialization.h"
 #include <imgui.h>
 
 #define OPENGL

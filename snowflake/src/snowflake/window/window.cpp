@@ -1,6 +1,7 @@
 #include "sfpch.h"
 #include "window.h"
 
+
 namespace SF {
 
 	SDL_Event Window::s_Event;

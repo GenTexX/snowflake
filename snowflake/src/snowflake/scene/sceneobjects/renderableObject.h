@@ -1,14 +1,28 @@
 #pragma once
 #include "sceneObject.h"
-#include <initializer_list>
 #include "../renderable.h"
+#include "../coloredQuad.h"
+#include "../texturedQuad.h"
+#include <boost/archive/binary_iarchive.hpp>
+#include <boost/archive/binary_oarchive.hpp>
+#include <boost/serialization/shared_ptr.hpp>
+#include <boost/serialization/base_object.hpp>
 
 
 namespace SF {
 
 	class RenderableObject : public SceneObject {
 	private:
+		RenderableObject() {}
 		Ref<Renderable> m_Renderable;
+
+		//serialization
+		friend class boost::serialization::access;
+		template<class Archive>
+		void serialize(Archive& ar, const unsigned int version) {
+			ar& boost::serialization::base_object<SceneObject>(*this);
+			ar& m_Renderable;
+		}
 	
 	public:
 		RenderableObject(Ref<Renderable> renderable) :m_Renderable(renderable) {

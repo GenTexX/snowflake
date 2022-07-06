@@ -5,27 +5,29 @@
 
 namespace SF {
 
+	std::unordered_map<std::string, Ref<Texture>> Texture::s_Textures = std::unordered_map<std::string, Ref<Texture>>();
+
 	Texture::~Texture() {
 
 
 
 	}
 
-	Ref<Texture> Texture::create(const std::string& path) {
+	int Texture::create(const std::string& path) {
 
 
 		switch (RendererAPI::getRendererAPI())
 		{
 
 		case RendererAPIEnum::OpenGL:
-			return createRef<OpenGLTexture>(path);
-			break;
+			s_Textures.insert(std::pair<std::string, Ref<Texture>>(path, createRef<OpenGLTexture>(path)));
+			return 0;
 		default:
 			break;
 		}
 
 		assert("RenderAPI not supported");
-		return nullptr;
+		return -1;
 
 	}
 

@@ -5,7 +5,7 @@ class Sandbox2D : public SF::Layer {
 
 private:
 	SF::OrthographicCameraController m_CameraController;
-	SF::Ref<SF::Texture> m_QuadTexture;
+	std::string m_QuadTexture;
 	SF::Ref<SF::Scene> m_Scene;
 
 public:

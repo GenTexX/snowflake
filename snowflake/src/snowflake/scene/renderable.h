@@ -1,6 +1,9 @@
 #pragma once
 #include <glm.hpp>
 #include "snowflake/renderer/texture.h"
+#include <boost/archive/binary_iarchive.hpp>
+#include <boost/archive/binary_oarchive.hpp>
+#include <boost/serialization/base_object.hpp>
 
 namespace SF {
 
@@ -18,8 +21,18 @@ namespace SF {
 		glm::vec3 m_Position;
 		glm::vec3 m_Size;
 		RenderableType m_Type;
-
+		Renderable() { m_Position = glm::vec3(); m_Size = glm::vec3(); m_Type = RenderableType::NONE; }
 		Renderable(glm::vec3& position, glm::vec3& size) :m_Position(position), m_Size(size), m_Type(RenderableType::NONE) {}
+
+	private:
+		//serialization
+		friend class boost::serialization::access;
+		template<class Archive>
+		void serialize(Archive& ar, const unsigned int version) {
+			ar& m_Position;
+			ar& m_Size;
+			ar& m_Type;
+		}
 
 	public:
 		glm::vec3& getPosition() { return m_Position; }
@@ -32,41 +45,10 @@ namespace SF {
 			return m_Type;
 		}
 
+		virtual void update() = 0;
+
 		~Renderable() {}
 
-	};
-
-	class ColoredQuad : public Renderable {
-
-	private:
-		glm::vec4 m_Color;
-
-
-	public:
-		ColoredQuad(glm::vec3& position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3& size = glm::vec3(1.0f, 1.0f, 1.0f), glm::vec4& color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f)) :Renderable(position, size) {
-			this->m_Type = RenderableType::COLORED_QUAD;
-			this->m_Color = color;
-		}
-		~ColoredQuad() {}
-
-	};
-
-	class TexturedQuad : public Renderable {
-	
-	private:
-		Ref<Texture> m_Texture;
-
-	public:
-		TexturedQuad(glm::vec3& position, glm::vec3& size, Ref<Texture> texture) :Renderable(position, size) {
-			this->m_Type = RenderableType::TEXTURED_QUAD;
-			m_Texture = texture;
-		}
-
-		Ref<Texture> getTexture() {
-			return m_Texture;
-		}
-
-		~TexturedQuad() {}
 	};
 
 }

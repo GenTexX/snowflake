@@ -9,6 +9,8 @@
 
 namespace SF {
 
+	const static char* SNOWFLAKE_NO_TEXTURE = "SNOWFLAKE_NO_TEXTURE_AVAILAIBLE";
+
 	class Renderer
 	{
 
@@ -27,7 +29,7 @@ namespace SF {
 
 		static void submit(const Ref<VertexArray> vao);
 		static void drawQuad(glm::vec2& position = glm::vec2(0.0f, 0.0f), glm::vec2& size = glm::vec2(1.0f, 1.0f), float rotation = 0.0f, glm::vec4& color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-		static void drawQuad(glm::vec2& position = glm::vec2(0.0f, 0.0f), glm::vec2& size = glm::vec2(1.0f, 1.0f), float rotation = 0.0f, Ref<Texture> texture = nullptr);
+		static void drawQuad(glm::vec2& position = glm::vec2(0.0f, 0.0f), glm::vec2& size = glm::vec2(1.0f, 1.0f), float rotation = 0.0f, const std::string& texture = SNOWFLAKE_NO_TEXTURE);
 
 	};
 

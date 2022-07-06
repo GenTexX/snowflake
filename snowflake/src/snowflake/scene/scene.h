@@ -5,6 +5,9 @@
 #include <algorithm>
 #include <list>
 #include <iterator>
+#include <boost/archive/binary_iarchive.hpp>
+#include <boost/archive/binary_oarchive.hpp>
+#include <boost/serialization/list.hpp>
 
 namespace SF {
 
@@ -32,13 +35,19 @@ namespace SF {
 		std::list<Ref<SceneObject>>::iterator it;
 	};
 
-
 	class Scene {
 	private:
-
-
 		std::list<Ref<SceneObject>> m_SceneObjects;
 		Ref<CameraObject> m_CameraObject;
+
+		//serialization
+		friend class boost::serialization::access;
+		template<class Archive>
+		void serialize(Archive& archive, const unsigned int version)
+		{
+			archive& m_SceneObjects;
+			archive& m_CameraObject;
+		}
 
 	public:
 		Scene() {
@@ -50,13 +59,19 @@ namespace SF {
 
 		void addObject(Ref<SceneObject> object) { m_SceneObjects.push_back(object); }
 		void setCameraObject(Ref<CameraObject> cam) {
-			bool found = (std::find(m_SceneObjects.begin(), m_SceneObjects.end(), cam) != m_SceneObjects.end());
-			if (!found)
+			std::list<Ref<SceneObject>>::iterator findIter = std::find(m_SceneObjects.begin(), m_SceneObjects.end(), cam);
+			if (findIter == m_SceneObjects.end())
 				addObject(cam);
+
 			m_CameraObject = cam;
+
 		}
 
-		Ref<CameraObject>& getCamera() { return m_CameraObject; }
+		Ref<CameraObject> getCamera() { 
+
+			return m_CameraObject;
+
+		}
 
 		SceneIterator begin() { return SceneIterator(m_SceneObjects.begin()); }
 		SceneIterator end() { return SceneIterator(m_SceneObjects.end()); }

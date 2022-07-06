@@ -15,5 +15,10 @@ void SF::SceneObject::removeChild(Ref<SceneObject> child) {
 }
 
 SF::SceneObject::SceneObject() {
+	m_Parent = nullptr;
+	m_Childs = std::list<Ref<SceneObject>>();
+	m_Type = SceneObjectType::EMPTY;
+}
 
+SF::SceneObject::~SceneObject() {
 }

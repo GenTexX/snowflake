@@ -1,6 +1,8 @@
 #pragma once
 #include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
+#include <boost/archive/text_oarchive.hpp>
+#include <boost/archive/text_iarchive.hpp>
 
 namespace SF {
 
@@ -13,6 +15,15 @@ namespace SF {
 		glm::mat4 m_View;
 
 		void recalculateView();
+
+		//serialization
+		friend class boost::serialization::access;
+		template<class Archive>
+		void serialize(Archive& ar, const unsigned int version) {
+			ar& m_Position;
+			ar& m_Projection;
+			ar& m_View;
+		}
 
 	public:
 		OrthographicCamera(float posX = 0.0f, float posY = 0.0f);
@@ -44,6 +55,13 @@ namespace SF {
 
 	private:
 		OrthographicCamera m_Camera;
+
+		//serialization
+		friend class boost::serialization::access;
+		template<class Archive>
+		void serialize(Archive& ar, const unsigned int version) {
+			ar& m_Camera;
+		}
 
 	public:
 		OrthographicCameraController(float posX = 0.0f, float posY = 0.0f);
