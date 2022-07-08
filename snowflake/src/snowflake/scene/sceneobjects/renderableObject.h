@@ -3,10 +3,9 @@
 #include "../renderable.h"
 #include "../coloredQuad.h"
 #include "../texturedQuad.h"
-#include <boost/archive/binary_iarchive.hpp>
-#include <boost/archive/binary_oarchive.hpp>
-#include <boost/serialization/shared_ptr.hpp>
-#include <boost/serialization/base_object.hpp>
+#include <memory>
+#include <cereal/access.hpp>
+#include <cereal/types/memory.hpp>
 
 
 namespace SF {
@@ -17,11 +16,10 @@ namespace SF {
 		Ref<Renderable> m_Renderable;
 
 		//serialization
-		friend class boost::serialization::access;
+		friend class cereal::access;
 		template<class Archive>
-		void serialize(Archive& ar, const unsigned int version) {
-			ar& boost::serialization::base_object<SceneObject>(*this);
-			ar& m_Renderable;
+		void serialize(Archive& ar) {
+			ar(cereal::base_class<SceneObject>(this), CEREAL_NVP(m_Renderable));
 		}
 	
 	public:
@@ -38,10 +36,10 @@ namespace SF {
 		}
 
 		glm::vec3 getWorldPosition() override {
-			if (m_Parent == nullptr) 
+			if (m_Parent.expired()) 
 				return getRelativePosition();
 			
-			return this->m_Renderable->getPosition() + m_Parent->getWorldPosition();
+			return this->m_Renderable->getPosition() + m_Parent.lock()->getWorldPosition();
 		}
 
 		void move(glm::vec3& direction) override {
@@ -57,3 +55,5 @@ namespace SF {
 	};
 
 }
+
+CEREAL_REGISTER_TYPE(SF::RenderableObject);

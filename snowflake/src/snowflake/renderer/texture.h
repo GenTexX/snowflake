@@ -1,7 +1,5 @@
 #pragma once
 #include "snowflake/core/core.h"
-#include <boost/archive/binary_iarchive.hpp>
-#include <boost/archive/binary_oarchive.hpp>
 #include <string>
 #include <unordered_map>
 
@@ -11,16 +9,6 @@ namespace SF {
 
 	private:
 		static std::unordered_map<std::string, Ref<Texture>> s_Textures;
-
-		//serialization
-		friend class boost::serialization::access;
-		template<class Archive>
-		void serialize(Archive& ar, const unsigned int version) {
-			ar& m_ID;
-			ar& m_Slot;
-			ar& m_Width;
-			ar& m_Height;
-		}
 
 	protected:
 		uint32_t m_ID;

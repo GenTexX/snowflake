@@ -8,9 +8,12 @@
 #include <algorithm>
 #include <list>
 #include <iterator>
-#include <boost/archive/text_iarchive.hpp>
-#include <boost/archive/text_oarchive.hpp>
-#include <boost/serialization/list.hpp>
+
+#include <cereal/archives/portable_binary.hpp>
+#include <cereal/archives/xml.hpp>
+#include <cereal/types/list.hpp>
+#include <cereal/types/polymorphic.hpp>
+#include <cereal/types/memory.hpp>
 
 namespace SF {
 
@@ -42,15 +45,15 @@ namespace SF {
 	private:
 		std::string m_SceneFile;
 		std::list<Ref<SceneObject>> m_SceneObjects;
-		Ref<CameraObject> m_CameraObject;
+		Ref<SceneObject> m_CameraObject;
 
 		//serialization
-		friend class boost::serialization::access;
+		friend class cereal::access;
 		template<class Archive>
-		void serialize(Archive& archive, const unsigned int version)
+		void serialize(Archive& archive)
 		{
-			archive& m_SceneObjects;
-			archive& m_CameraObject;
+			archive(CEREAL_NVP(m_SceneObjects));
+			archive(CEREAL_NVP(m_CameraObject));
 		}
 
 	public:
@@ -62,15 +65,12 @@ namespace SF {
 		void save() {
 
 			try {
-				std::ofstream ofs(m_SceneFile);
-				boost::archive::text_oarchive oa(ofs);
-				oa.template register_type<SF::ColoredQuad>();
-				oa.template register_type<SF::TexturedQuad>();
-				oa.template register_type<SF::CameraObject>();
-				oa.template register_type<SF::RenderableObject>();
-				oa << *this;
-			} catch (boost::archive::archive_exception e) {
-				std::cout << e.what();
+				std::ofstream ofs(m_SceneFile, std::ios::binary);
+				cereal::XMLOutputArchive oa(ofs);
+
+				oa(*this);
+			} catch (std::exception e) {
+				SF_CORE_ERROR(e.what());
 			}
 
 		}
@@ -78,16 +78,12 @@ namespace SF {
 
 			try {
 				{
-					std::ifstream ifs(m_SceneFile);
-					boost::archive::text_iarchive ia(ifs);
-					ia.template register_type<SF::ColoredQuad>();
-					ia.template register_type<SF::TexturedQuad>();
-					ia.template register_type<SF::CameraObject>();
-					ia.template register_type<SF::RenderableObject>();
-					ia >> *this;
+					std::ifstream ifs(m_SceneFile, std::ios::binary);
+					cereal::XMLInputArchive ia(ifs);
+					ia(*this);
 				}
-			} catch (boost::archive::archive_exception e) {
-				SF_ERROR(e.what());
+			} catch (std::exception e) {
+				SF_CORE_ERROR(e.what());
 			}
 
 		}
@@ -113,7 +109,7 @@ namespace SF {
 
 		Ref<CameraObject> getCamera() { 
 
-			return m_CameraObject;
+			return std::static_pointer_cast<CameraObject>(m_CameraObject);
 
 		}
 

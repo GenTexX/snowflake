@@ -2,9 +2,9 @@
 #include "../renderable.h"
 #include "snowflake/core/core.h"
 #include <list>
-#include <boost/archive/text_oarchive.hpp>
-#include <boost/archive/text_iarchive.hpp>
-#include <boost/serialization/list.hpp>
+#include <cereal/archives/portable_binary.hpp>
+#include <cereal/types/list.hpp>
+#include <cereal/types/memory.hpp>
 
 namespace SF {
 	enum class SceneObjectType {
@@ -14,18 +14,16 @@ namespace SF {
 		RENDERABLE_OBJECT = 3
 	};
 
-	class SceneObject {
+	class SceneObject : public std::enable_shared_from_this<SceneObject> {
 	protected:
-		SceneObject* m_Parent;
+		std::weak_ptr<SceneObject> m_Parent;
 		std::list<Ref<SceneObject>> m_Childs;
 		SceneObjectType m_Type;
 	private:
-		friend class boost::serialization::access;
+		friend class cereal::access;
 		template<class Archive>
-		void serialize(Archive& ar, const unsigned int version) {
-			ar& m_Parent;
-			ar& m_Childs;
-			ar& m_Type;
+		void serialize(Archive& ar) {
+			ar(CEREAL_NVP(m_Parent), CEREAL_NVP(m_Childs), CEREAL_NVP(m_Type));
 		}
 
 	public:

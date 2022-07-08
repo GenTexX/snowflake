@@ -1,8 +1,8 @@
 #pragma once
 #include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
-#include <boost/archive/text_oarchive.hpp>
-#include <boost/archive/text_iarchive.hpp>
+#include <cereal/access.hpp>
+#include <cereal/archives/portable_binary.hpp>
 
 namespace SF {
 
@@ -17,12 +17,10 @@ namespace SF {
 		void recalculateView();
 
 		//serialization
-		friend class boost::serialization::access;
+		friend class cereal::access;
 		template<class Archive>
-		void serialize(Archive& ar, const unsigned int version) {
-			ar& m_Position;
-			ar& m_Projection;
-			ar& m_View;
+		void serialize(Archive& ar) {
+			ar(CEREAL_NVP(m_Position), CEREAL_NVP(m_Projection), CEREAL_NVP(m_View));
 		}
 
 	public:
@@ -57,10 +55,10 @@ namespace SF {
 		OrthographicCamera m_Camera;
 
 		//serialization
-		friend class boost::serialization::access;
+		friend class cereal::access;
 		template<class Archive>
-		void serialize(Archive& ar, const unsigned int version) {
-			ar& m_Camera;
+		void serialize(Archive& ar) {
+			ar(CEREAL_NVP(m_Camera));
 		}
 
 	public:

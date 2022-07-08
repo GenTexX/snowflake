@@ -20,9 +20,8 @@ includeDir["SPDLOG"] = "vendor/spdlog/include"
 includeDir["GLEW"] = "vendor/GLEW/include"
 libDir["GLEW"] = "vendor/GLEW/lib"
 
---BOOST
-includeDir["BOOST"] = "vendor/boost_1_79_0/include"
-libDir["BOOST"] = "vendor/boost_1_79_0/stage/lib"
+--CERIAL
+includeDir["CEREAL"] = "vendor/cereal/include"
 
 --SDL
 includeDir["SDL"] = "vendor/SDL/include"
@@ -67,7 +66,7 @@ project "snowflake"
 		"%{prj.name}/src",
 		"%{includeDir.SPDLOG}",
 		"%{includeDir.GLEW}",
-		"%{includeDir.BOOST}",
+		"%{includeDir.CEREAL}",
 		"%{includeDir.SDL}",
 		"%{includeDir.GLM}",
 		"%{includeDir.IMGUI}",
@@ -126,14 +125,13 @@ project "sandbox"
 		includeDir["GLM"],
 		includeDir["IMGUI"],
 		includeDir["STB"],
-		includeDir["BOOST"],
+		includeDir["CEREAL"],
 		"snowflake/src"
 	}
 
 	libdirs
 	{
 		"%{libDir.GLEW}",
-		"%{libDir.BOOST}",
 		"%{libDir.SDL}"
 	}
 

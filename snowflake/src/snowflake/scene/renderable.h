@@ -1,9 +1,7 @@
 #pragma once
 #include <glm.hpp>
 #include "snowflake/renderer/texture.h"
-#include <boost/archive/binary_iarchive.hpp>
-#include <boost/archive/binary_oarchive.hpp>
-#include <boost/serialization/base_object.hpp>
+#include <cereal/access.hpp>
 
 namespace SF {
 
@@ -26,12 +24,10 @@ namespace SF {
 
 	private:
 		//serialization
-		friend class boost::serialization::access;
+		friend class cereal::access;
 		template<class Archive>
-		void serialize(Archive& ar, const unsigned int version) {
-			ar& m_Position;
-			ar& m_Size;
-			ar& m_Type;
+		void serialize(Archive& ar) {
+			ar(CEREAL_NVP(m_Position), CEREAL_NVP(m_Size), CEREAL_NVP(m_Type));
 		}
 
 	public:

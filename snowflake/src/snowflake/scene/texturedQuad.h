@@ -2,8 +2,8 @@
 #include "snowflake/core/core.h"
 #include "renderable.h"
 #include <glm.hpp>
-#include <boost/serialization/string.hpp>
-#include <boost/serialization/shared_ptr.hpp>
+#include <cereal/access.hpp>
+#include <cereal/types/string.hpp>
 
 namespace SF {
 
@@ -14,11 +14,10 @@ namespace SF {
 		std::string m_Texture;
 
 		//serialization
-		friend class boost::serialization::access;
+		friend class cereal::access;
 		template<class Archive>
-		void serialize(Archive& ar, const unsigned int version) {
-			ar& boost::serialization::base_object<Renderable>(*this);
-			ar& m_Texture;
+		void serialize(Archive& ar) {
+			ar(cereal::base_class<Renderable>(this), CEREAL_NVP(m_Texture));
 		}
 
 	public:
@@ -37,3 +36,5 @@ namespace SF {
 	};
 
 }
+
+CEREAL_REGISTER_TYPE(SF::TexturedQuad);

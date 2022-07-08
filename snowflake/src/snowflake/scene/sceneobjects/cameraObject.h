@@ -1,11 +1,8 @@
 #pragma once
 #include "sceneObject.h"
 #include "snowflake/renderer/camera.h"
-#include <boost/archive/text_oarchive.hpp>
-#include <boost/archive/text_iarchive.hpp>
-#include <boost/serialization/list.hpp>
-#include <boost/serialization/shared_ptr.hpp>
-#include <boost/serialization/base_object.hpp>
+#include <cereal/access.hpp>
+#include <cereal/types/memory.hpp>
 
 namespace SF {
 
@@ -15,18 +12,17 @@ namespace SF {
 		OrthographicCameraController m_CameraController;
 
 		//serialization
-		friend class boost::serialization::access;
+		friend class cereal::access;
 		template<class Archive>
-		void serialize(Archive& ar, const unsigned int version) {
-			ar& boost::serialization::base_object<SceneObject>(*this);
-			ar& m_CameraController;
+		void serialize(Archive& ar) {
+			ar(cereal::base_class<SceneObject>(this), CEREAL_NVP(m_CameraController));
 		}
 
 	public:
 		CameraObject(OrthographicCameraController& cameracontroller) :m_CameraController(cameracontroller), SceneObject() {
-			
+
 			m_Type = SceneObjectType::CAMERA_OBJECT;
-		
+
 		}
 
 		~CameraObject() {}
@@ -41,7 +37,12 @@ namespace SF {
 		}
 
 		glm::vec3 getWorldPosition() override {
-			return this->m_CameraController.getCamera().getPosition() + m_Parent->getWorldPosition();
+
+			if (m_Parent.expired()) {
+				return getRelativePosition();
+			}
+
+			return this->m_CameraController.getCamera().getPosition() + m_Parent.lock()->getWorldPosition();
 		}
 
 		void move(glm::vec3& direction) override {
@@ -56,3 +57,5 @@ namespace SF {
 	};
 
 }
+
+CEREAL_REGISTER_TYPE(SF::CameraObject);

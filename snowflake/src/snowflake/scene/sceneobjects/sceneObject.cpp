@@ -3,7 +3,7 @@
 
 void SF::SceneObject::addChild(Ref<SceneObject> child) {
 
-	child->m_Parent = this;
+	child->m_Parent = shared_from_this();
 	m_Childs.push_back(child);
 
 }
@@ -15,7 +15,6 @@ void SF::SceneObject::removeChild(Ref<SceneObject> child) {
 }
 
 SF::SceneObject::SceneObject() {
-	m_Parent = nullptr;
 	m_Childs = std::list<Ref<SceneObject>>();
 	m_Type = SceneObjectType::EMPTY;
 }

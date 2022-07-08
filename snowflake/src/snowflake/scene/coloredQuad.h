@@ -2,6 +2,7 @@
 #include "snowflake/core/core.h"
 #include "renderable.h"
 #include <glm.hpp>
+#include <cereal/access.hpp>
 
 namespace SF {
 
@@ -11,11 +12,10 @@ namespace SF {
 		glm::vec4 m_Color;
 
 		//serialization
-		friend class boost::serialization::access;
+		friend class cereal::access;
 		template<class Archive>
-		void serialize(Archive& ar, const unsigned int version) {
-			ar& boost::serialization::base_object<Renderable>(*this);
-			ar& m_Color;
+		void serialize(Archive& ar) {
+			ar(cereal::base_class<Renderable>(this), CEREAL_NVP(m_Color));
 		}
 
 
@@ -35,3 +35,5 @@ namespace SF {
 	};
 
 }
+
+CEREAL_REGISTER_TYPE(SF::ColoredQuad);

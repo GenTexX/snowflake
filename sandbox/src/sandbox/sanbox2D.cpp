@@ -5,7 +5,7 @@
 Sandbox2D::Sandbox2D() : m_CameraController() {
 	
 	m_Scene = SF::createRef<SF::Scene>("res/test.sfscene");
-	this->m_QuadTexture = "res/cobble_blood.png";
+	/*this->m_QuadTexture = "res/cobble_blood.png";
 	SF::Texture::create(m_QuadTexture);
 
 	SF::OrthographicCameraController cameraController = SF::OrthographicCameraController();
@@ -35,9 +35,9 @@ Sandbox2D::Sandbox2D() : m_CameraController() {
 
 	m_Scene->setCameraObject(cameraObject);
 	
-	m_Scene->save();
+	m_Scene->save();*/
 
-	//m_Scene->load();
+	m_Scene->load();
 	
 	
 	
