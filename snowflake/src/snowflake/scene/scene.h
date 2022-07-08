@@ -2,11 +2,14 @@
 #include "sceneobjects/sceneObject.h"
 #include "sceneobjects/renderableObject.h"
 #include "sceneobjects/cameraObject.h"
+#include "sceneSerialization.h"
+#include <fstream>
+#include <iostream>
 #include <algorithm>
 #include <list>
 #include <iterator>
-#include <boost/archive/binary_iarchive.hpp>
-#include <boost/archive/binary_oarchive.hpp>
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
 #include <boost/serialization/list.hpp>
 
 namespace SF {
@@ -37,6 +40,7 @@ namespace SF {
 
 	class Scene {
 	private:
+		std::string m_SceneFile;
 		std::list<Ref<SceneObject>> m_SceneObjects;
 		Ref<CameraObject> m_CameraObject;
 
@@ -50,12 +54,52 @@ namespace SF {
 		}
 
 	public:
-		Scene() {
-
+		Scene(const std::string& sceneFile) {
+			m_SceneFile = sceneFile;
 		}
 		~Scene() {}
 
-		void update() {}
+		void save() {
+
+			try {
+				std::ofstream ofs(m_SceneFile);
+				boost::archive::text_oarchive oa(ofs);
+				oa.template register_type<SF::ColoredQuad>();
+				oa.template register_type<SF::TexturedQuad>();
+				oa.template register_type<SF::CameraObject>();
+				oa.template register_type<SF::RenderableObject>();
+				oa << *this;
+			} catch (boost::archive::archive_exception e) {
+				std::cout << e.what();
+			}
+
+		}
+		void load() {
+
+			try {
+				{
+					std::ifstream ifs(m_SceneFile);
+					boost::archive::text_iarchive ia(ifs);
+					ia.template register_type<SF::ColoredQuad>();
+					ia.template register_type<SF::TexturedQuad>();
+					ia.template register_type<SF::CameraObject>();
+					ia.template register_type<SF::RenderableObject>();
+					ia >> *this;
+				}
+			} catch (boost::archive::archive_exception e) {
+				SF_ERROR(e.what());
+			}
+
+		}
+
+		void update() {
+		
+			for (auto object : m_SceneObjects)
+			{
+				object->update();
+			}
+
+		}
 
 		void addObject(Ref<SceneObject> object) { m_SceneObjects.push_back(object); }
 		void setCameraObject(Ref<CameraObject> cam) {

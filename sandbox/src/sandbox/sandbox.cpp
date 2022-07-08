@@ -1,6 +1,7 @@
 #include "sandbox.h"
 #include "snowflake/core/core.h"
 #include "sanbox2D.h"
+#include "statWindow.h"
 
 void Sandbox::createWindow()
 {
@@ -38,6 +39,8 @@ void Sandbox::init() {
 
 	this->m_ImGuiLayer = new SF::ImGuiLayer();
 	this->pushOverLay(this->m_ImGuiLayer);
+
+	m_ImGuiLayer->addWindow(new StatWindow("Stats"));
 
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 

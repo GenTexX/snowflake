@@ -31,6 +31,10 @@ namespace SF {
 
 		~CameraObject() {}
 
+		void update() override {
+
+		}
+
 		//Position
 		glm::vec3 getRelativePosition() override {
 			return this->m_CameraController.getCamera().getPosition();

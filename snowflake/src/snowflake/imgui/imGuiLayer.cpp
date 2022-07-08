@@ -191,7 +191,7 @@ namespace SF {
 		/*  DRAW IMGUI  */
 		for each (auto window in this->m_Windows)
 		{
-			window->onRender();
+			window->onRender(deltatime);
 		}
 
 		this->updateCursor();

@@ -177,14 +177,11 @@ namespace SF {
 
 		s_ColoredQuadRenderData.shader->setFloat4("u_Color", color);
 
-		SF_CORE_TRACE("drawing colored quad at position ({0}, {1})", position.x, position.y);
 		Renderer::submit(s_ColoredQuadRenderData.vao);
 
 	}
 
 	void Renderer::drawQuad(glm::vec2& position, glm::vec2& size, float rotation, const std::string& texture) {
-	
-		SF_CORE_TRACE("drawing textured quad at position ({0}, {1})", position.x, position.y);
 
 		glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(position, 1.0f)) *
 			glm::rotate(glm::mat4(1.0f), glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f)) *

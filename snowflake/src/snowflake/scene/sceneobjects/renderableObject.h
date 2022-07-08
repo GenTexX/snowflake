@@ -30,6 +30,8 @@ namespace SF {
 		}
 		~RenderableObject() {}
 		
+		void update() override {}
+
 		//Position
 		glm::vec3 getRelativePosition() override {
 			return this->m_Renderable->getPosition();

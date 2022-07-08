@@ -35,6 +35,8 @@ namespace SF {
 		void addChild(Ref<SceneObject> child);
 		void removeChild(Ref<SceneObject> child);
 
+		virtual void update() = 0;
+
 		virtual glm::vec3 getRelativePosition() = 0;
 		virtual glm::vec3 getWorldPosition() = 0;
 		virtual void move(glm::vec3& direction) = 0;
